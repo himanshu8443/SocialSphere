@@ -1,0 +1,15 @@
+[
+  {
+    "applyTo": "user.me%3Fbatch=1&input=%257B%257D",
+    "headers": [
+      {
+        "name": "set-cookie",
+        "value": "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjbG84ZzV5cHkwMDAwdGxyZ3RpaWs0cThiIiwiaWF0IjoxNjk4NDA5NDE2fQ.30F_XZC-WP326gKOdsEr0vcxZocoDAfEU51lTW0K3kk; path=/; expires=Sat, 26 Oct 2024 12:23:36 GMT; httponly; sameSite=none;"
+      },
+      {
+        "name": "header-name",
+        "value": "header value"
+      }
+    ]
+  }
+]

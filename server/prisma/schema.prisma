@@ -1,0 +1,72 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                     String       @id @default(cuid())
+  name                   String
+  password               String
+  email                  String      @unique
+  emailVerified          Boolean      @default(false)
+  profileImage           String?
+  friends                User[]       @relation("friends")
+  pendingFriends         User[]       @relation("pendingFriends")
+  pendingFriendsRelation User[]       @relation("pendingFriends")
+  friendsRelation        User[]       @relation("friends")
+  createdAt              DateTime     @default(now())
+  updatedAt              DateTime     @updatedAt
+  posts                  Post[]
+  likedPosts             Post[]       @relation("likedBy")
+  savedPosts             Post[]       @relation("savedBy")
+  comments               Comment[]
+  preferences            Preferences?
+}
+
+enum PostType {
+  video
+  image
+  text
+}
+
+model Post {
+  id          Int       @id @default(autoincrement())
+  title       String
+  type        PostType
+  src         String?
+  content     String?
+  likes       Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime
+  createdById String
+  User        User      @relation(fields: [createdById], references: [id])
+  likedBy     User[]    @relation("likedBy")
+  savedBy     User[]    @relation("savedBy")
+  Comment     Comment[]
+
+  @@index([title])
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  postId    Int
+  userId    String
+  Post      Post     @relation(fields: [postId], references: [id])
+  User      User     @relation(fields: [userId], references: [id])
+}
+
+model Preferences {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime
+  userId      String   @unique
+  User        User     @relation(fields: [userId], references: [id])
+  preferences Json
+}

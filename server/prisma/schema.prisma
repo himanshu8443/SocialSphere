@@ -34,7 +34,7 @@ enum PostType {
 }
 
 model Post {
-  id          Int       @id @default(autoincrement())
+  id          String   @id @default(cuid())
   title       String
   type        PostType
   src         String?
@@ -52,11 +52,11 @@ model Post {
 }
 
 model Comment {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(cuid())
   content   String
   createdAt DateTime @default(now())
   updatedAt DateTime
-  postId    Int
+  postId    String
   userId    String
   Post      Post     @relation(fields: [postId], references: [id])
   User      User     @relation(fields: [userId], references: [id])

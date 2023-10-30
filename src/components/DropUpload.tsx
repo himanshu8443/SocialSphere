@@ -4,6 +4,7 @@ export default function Upload() {
   return (
     <div>
       <UploadDropzone
+        config={{ mode: "auto", appendOnPaste: true }}
         content={{
           allowedContent: "Image(1MB), Video(10MB)",
         }}

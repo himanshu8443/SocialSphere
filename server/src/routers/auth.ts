@@ -91,8 +91,8 @@ export const authRouter = router({
       );
       user.password = "";
       return {
-        code: "",
-        message: "",
+        success: true,
+        message: "Successfully logged in",
         data: user,
       };
     }),

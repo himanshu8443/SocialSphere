@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { trpc } from "../../trpc/trpc";
 
 export async function signUp({
@@ -16,8 +17,6 @@ export async function signUp({
       password,
     });
     return {
-      success: true,
-      message: "Successfully created user",
       data: result,
     };
   } catch (error: any) {
@@ -43,14 +42,16 @@ export async function login({
       password,
     });
     console.log("result", result);
+    toast.success("Successfully logged in", { theme: "dark", autoClose: 1000 });
     return {
-      success: true,
-      message: "Successfully logged in",
       data: result,
     };
   } catch (error: any) {
     console.log("error message", error?.data?.message);
     console.log("error", error);
+    toast.error(error?.data?.message, {
+      theme: "dark",
+    });
     return {
       success: false,
       message: error?.data?.message,

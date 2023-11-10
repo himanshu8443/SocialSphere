@@ -5,7 +5,7 @@ import SignUpImg from "../../assets/sign-up-form.svg";
 import Image from "next/image";
 import { signUp } from "../api/auth";
 
-export const page = () => {
+export const SignUp = () => {
   type Inputs = {
     name: string;
     email: string;
@@ -107,4 +107,4 @@ export const page = () => {
   );
 };
 
-export default page;
+export default SignUp;

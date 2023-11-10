@@ -5,7 +5,7 @@
   "scripts": {
     "build:server": "cd server && rimraf dist && npx tsc",
     "start:server": "node dist/index.js",
-    "predev:server": "rimraf dist && tsc",
+    "predev:server": "cd server && rimraf dist && tsc",
     "dev:server": "cd server && concurrently \"npx tsc -w\" \"nodemon dist/index.js\"",
     "dev:client": "next dev",
     "build:client": "next build",

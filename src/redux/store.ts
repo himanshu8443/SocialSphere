@@ -1,8 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { userSlice } from "./slices/user";
 import { persistReducer, persistStore } from "redux-persist";
 import thunk from "redux-thunk";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
+import { userSlice } from "./slices/user";
+import { modeSlice } from "./slices/mode";
+
 const createNoopStorage = () => {
   return {
     getItem(_key: any) {
@@ -27,11 +29,13 @@ const persistConfig = {
   whitelist: ["email", "name"],
 };
 
-const persistedReducer = persistReducer(persistConfig, userSlice.reducer);
+const userPersistedReducer = persistReducer(persistConfig, userSlice.reducer);
+const modePersistedReducer = persistReducer(persistConfig, modeSlice.reducer);
 
 export const store = configureStore({
   reducer: {
-    user: persistedReducer,
+    user: userPersistedReducer,
+    mode: modePersistedReducer,
   },
   middleware: [thunk],
 });

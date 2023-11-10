@@ -13,6 +13,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.14.16",
+    "@mui/material": "^5.14.16",
     "@prisma/client": "^5.5.2",
     "@reduxjs/toolkit": "^1.9.7",
     "@trpc/client": "^10.41.0",
@@ -25,9 +29,11 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
     "next": "^14.0.0",
+    "next-themes": "^0.2.1",
     "prisma": "^5.5.2",
     "react": "^18",
     "react-dom": "^18",
+    "react-hook-form": "^7.47.0",
     "react-redux": "^8.1.3",
     "react-toastify": "^9.1.3",
     "redux-persist": "^6.0.0",

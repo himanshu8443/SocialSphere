@@ -1,4 +1,4 @@
-import { UploadDropzone } from "@/utils/uploadthing";
+import { UploadDropzone } from "@/lib/uploadthing";
 
 export default function Upload() {
   return (

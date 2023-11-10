@@ -5,7 +5,8 @@ import { getUserDetails } from "@/app/api/user";
 import DropUpload from "@/components/DropUpload";
 import { UserIncludes } from "@/app/api/user";
 import { setEmail, setName } from "@/redux/slices/user";
-import { useAppDispatch, useAppSelector } from "@/hook";
+import { useAppDispatch, useAppSelector } from "@/lib/hook";
+import ThemeSwitcher from "@/components/theme/ThemeSwither";
 
 export default function Home() {
   const [user, setUser] = useState() as any;
@@ -13,7 +14,7 @@ export default function Home() {
   const state = useAppSelector((state) => state.user);
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-3 dark:bg-purple-500">
       <h1>Home</h1>
       <button
         onClick={async () => {
@@ -73,6 +74,10 @@ export default function Home() {
           set email
         </button>
         <p>email {state.email}</p>
+      </div>
+      <div className="flex flex-col gap-3">
+        <h1>Theme</h1>
+        <ThemeSwitcher />
       </div>
     </div>
   );

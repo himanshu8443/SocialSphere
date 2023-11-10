@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ToastContainer } from "react-toastify";
 import { Inter } from "next/font/google";
 import ReduxProvider from "@/redux/provider";
+import ThemeProvider from "@/components/theme/ThemeProvider";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 
@@ -22,7 +23,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <ReduxProvider>
           <ToastContainer />
-          {children}
+          <ThemeProvider>{children}</ThemeProvider>
         </ReduxProvider>
       </body>
     </html>

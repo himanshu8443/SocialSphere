@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm, SubmitHandler } from "react-hook-form";
-import SignUpImg from "../../assets/sign-up-form.svg";
+import SignUpImg from "../../assets/signup.svg";
 import Image from "next/image";
 import { signUp } from "../api/auth";
 
@@ -21,14 +21,16 @@ export default function Signup() {
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     console.log(data);
     const res = await signUp(data);
-    console.log(res);
+    if (res.success === true) {
+      console.log("data", res?.data);
+    }
   };
 
   return (
     <div className=" dark:bg-gray-700 text-white h-full flex justify-center items-center min-h-screen p-6 ">
       <div className=" flex justify-between gap-20 items-center w-[70%] ">
-        <div className="flex flex-col space-y-4">
-          <h1 className="text-primary-600 text-5xl font-bold">Sign Up</h1>
+        <div className="flex flex-col gap-10 mb-32 space-y-4">
+          <h1 className="text-primary-600 text-7xl font-bold">Sign Up</h1>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col space-y-4">
               <div className="w-72">

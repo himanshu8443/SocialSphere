@@ -5,3 +5,15 @@
 [data-theme="dark"] body {
   background-color: black;
 }
+
+
+
+
+.Toastify__progress-bar--success {
+  background: #fff;
+
+}
+
+.Toastify__close-button {
+  color: white;
+}

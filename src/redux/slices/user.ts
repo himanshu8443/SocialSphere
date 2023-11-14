@@ -1,15 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 // Define a type for the slice state
-interface UserState {
+export interface UserState {
+  auth: boolean;
   name: string;
   email: string;
+  profileImage: string;
 }
 
 // Define the initial state using that type
 const initialState: UserState = {
+  auth: false,
   name: "",
-  email: "nmn",
+  email: "",
+  profileImage: "",
 };
 
 export const userSlice = createSlice({
@@ -23,7 +27,22 @@ export const userSlice = createSlice({
     setEmail: (state, action) => {
       state.email = action.payload;
     },
+    setAuth: (state, action) => {
+      state.auth = action.payload;
+    },
+    setUser: (state, action) => {
+      state.auth = true;
+      state.name = action.payload.name;
+      state.email = action.payload.email;
+      state.profileImage = action.payload.profileImage;
+    },
+    setLogout: (state) => {
+      state.auth = false;
+      state.name = "";
+      state.email = "";
+    },
   },
 });
 
-export const { setName, setEmail } = userSlice.actions;
+export const { setName, setEmail, setAuth, setLogout, setUser } =
+  userSlice.actions;

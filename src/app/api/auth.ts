@@ -16,16 +16,13 @@ export async function signUp({
       email,
       password,
     });
-    return {
-      data: result,
-    };
+    toast.success(result.message);
+    return result;
   } catch (error: any) {
+    toast.error(error?.data?.message || "Somthing went wrong");
     console.log("error message", error?.data?.message);
     console.log("error", error);
-    return {
-      success: false,
-      message: error?.data?.message,
-    };
+    return error;
   }
 }
 
@@ -41,21 +38,14 @@ export async function login({
       email,
       password,
     });
-    console.log("result", result);
-    toast.success("Successfully logged in", { theme: "dark", autoClose: 1000 });
-    return {
-      data: result,
-    };
+    toast.success(result.message);
+    return result;
   } catch (error: any) {
     console.log("error message", error?.data?.message);
     console.log("error", error);
-    toast.error(error?.data?.message, {
-      theme: "dark",
-    });
-    return {
-      success: false,
-      message: error?.data?.message,
-    };
+
+    toast.error(error?.data?.message || "Somthing went wrong");
+    return error;
   }
 }
 
@@ -63,13 +53,12 @@ export async function logout() {
   try {
     const result = await trpc.auth.logout.mutate();
     console.log("result", result);
-    return {
-      success: true,
-      message: "Successfully logged out",
-    };
+    toast.success(result.message);
+    return result;
   } catch (error: any) {
     console.log("error message", error?.data?.message);
     console.log("error", error);
+    toast.error(error?.data?.message || "Somthing went wrong");
     return {
       success: false,
       message: error?.data?.message,

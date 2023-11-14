@@ -41,11 +41,17 @@ export const authRouter = router({
           name,
           email,
           password: hashedPassword,
-          profileImage,
+          profileImage:
+            profileImage ||
+            `https://api.dicebear.com/6.x/thumbs/svg?seed=${name}`,
         },
       });
       user.password = "";
-      return user;
+      return {
+        success: true,
+        message: "Signed up successfully",
+        data: user,
+      };
     }),
 
   // Login
@@ -92,7 +98,7 @@ export const authRouter = router({
       user.password = "";
       return {
         success: true,
-        message: "Successfully logged in",
+        message: "Logged in successfully",
         data: user,
       };
     }),
@@ -106,7 +112,8 @@ export const authRouter = router({
       ).toUTCString()}; httponly`
     );
     return {
-      data: "User logged out",
+      success: true,
+      message: "Logged out successfully",
     };
   }),
 });

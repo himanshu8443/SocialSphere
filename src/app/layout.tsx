@@ -1,12 +1,16 @@
 import type { Metadata } from "next";
 import { ToastContainer } from "react-toastify";
-import { Inter } from "next/font/google";
+import { Poppins } from "next/font/google";
 import ReduxProvider from "@/redux/provider";
 import ThemeProvider from "@/components/theme/ThemeProvider";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
+import Nav from "@/components/Navbar/Nav";
 
-const inter = Inter({ subsets: ["latin"] });
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,10 +24,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={poppins.className}>
         <ReduxProvider>
-          <ToastContainer />
-          <ThemeProvider>{children}</ThemeProvider>
+          <ToastContainer
+            autoClose={1000}
+            toastStyle={{ backgroundColor: "#006B7D", color: "#fff" }}
+          />
+          <ThemeProvider>
+            <Nav />
+            {children}
+          </ThemeProvider>
         </ReduxProvider>
       </body>
     </html>

@@ -21,6 +21,10 @@ model User {
   createdAt              DateTime     @default(now())
   updatedAt              DateTime     @updatedAt
   posts                  Post[]
+  about                  String?      @default("Hi, I'm using Sphere")
+  location               String?
+  twitter                String?
+  linkedin               String?
   likedPosts             Post[]       @relation("likedBy")
   savedPosts             Post[]       @relation("savedBy")
   comments               Comment[]

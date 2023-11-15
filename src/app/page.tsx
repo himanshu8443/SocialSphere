@@ -1,5 +1,13 @@
-import { getUserDetails } from "@/app/api/user";
+import Feed from "@/components/home/Feed";
+import SideProfile from "@/components/home/SideProfile";
+import Sponser from "@/components/home/Sponser";
 
 export default function Home() {
-  return <div></div>;
+  return (
+    <div className=" flex gap-10 p-5 justify-between max-w-[1300px] mx-auto">
+      <SideProfile />
+      <Feed />
+      <Sponser />
+    </div>
+  );
 }

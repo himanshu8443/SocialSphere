@@ -17,11 +17,11 @@ export async function signUp({
       password,
     });
     toast.success(result.message);
-    return result;
+    return result.data;
   } catch (error: any) {
     toast.error(error?.data?.message || "Somthing went wrong");
-    console.log("error message", error?.data?.message);
-    console.log("error", error);
+    // console.log("error message", error?.data?.message);
+    // console.log("error", error);
     return error;
   }
 }
@@ -41,8 +41,8 @@ export async function login({
     toast.success(result.message);
     return result;
   } catch (error: any) {
-    console.log("error message", error?.data?.message);
-    console.log("error", error);
+    // console.log("error message", error?.data?.message);
+    // console.log("error", error);
 
     toast.error(error?.data?.message || "Somthing went wrong");
     return error;
@@ -52,16 +52,20 @@ export async function login({
 export async function logout() {
   try {
     const result = await trpc.auth.logout.mutate();
-    console.log("result", result);
     toast.success(result.message);
     return result;
   } catch (error: any) {
-    console.log("error message", error?.data?.message);
-    console.log("error", error);
-    toast.error(error?.data?.message || "Somthing went wrong");
-    return {
-      success: false,
-      message: error?.data?.message,
-    };
+    return error?.data?.code;
+  }
+}
+
+export async function isLoggedIn() {
+  try {
+    const result = await trpc.auth.isLoggedIn.query();
+    return result;
+  } catch (error: any) {
+    // console.log("error message", error?.data?.message);
+    // console.log("error", error);
+    return error;
   }
 }

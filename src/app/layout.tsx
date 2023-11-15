@@ -6,6 +6,7 @@ import ThemeProvider from "@/components/theme/ThemeProvider";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 import Nav from "@/components/Navbar/Nav";
+import AutoLogout from "@/components/AutoLogout";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -31,6 +32,7 @@ export default function RootLayout({
             toastStyle={{ backgroundColor: "#006B7D", color: "#fff" }}
           />
           <ThemeProvider>
+            <AutoLogout />
             <Nav />
             {children}
           </ThemeProvider>

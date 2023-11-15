@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { router, publicProcedure, protectedProcedure } from "../trpc/trpc";
+import { router, protectedProcedure } from "../trpc/trpc";
 import { z } from "zod";
 
 export const userRouter = router({
@@ -28,6 +28,10 @@ export const userRouter = router({
         });
       }
       user.password = "";
-      return user;
+      return {
+        success: true,
+        message: "Successfully got user details",
+        data: user,
+      };
     }),
 });

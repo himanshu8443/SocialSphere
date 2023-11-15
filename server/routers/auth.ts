@@ -90,10 +90,11 @@ export const authRouter = router({
         });
       }
       const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET!);
-
+      // 1 week
+      const expires = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7);
       ctx.res.setHeader(
         "Set-Cookie",
-        `token=${token}; path=/; httponly; max-age=31536000;`
+        `token=${token}; path=/; httponly; expires=${expires.toUTCString()} samesite=strict; secure`
       );
       user.password = "";
       return {
@@ -108,12 +109,20 @@ export const authRouter = router({
     ctx.res.setHeader(
       "Set-Cookie",
       `token=; path=/; expires=${new Date(
-        Date.now() + 1000 * 60 * 60 * 24 * 365
-      ).toUTCString()}; httponly`
+        Date.now()
+      ).toUTCString()}; httponly; samesite=strict; secure`
     );
     return {
       success: true,
       message: "Logged out successfully",
+    };
+  }),
+
+  // isLogged
+  isLoggedIn: protectedProcedure.query(async ({ ctx }) => {
+    return {
+      success: true,
+      message: "User is logged in",
     };
   }),
 });

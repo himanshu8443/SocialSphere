@@ -17,7 +17,7 @@ export async function signUp({
       password,
     });
     toast.success(result.message);
-    return result.data;
+    return result;
   } catch (error: any) {
     toast.error(error?.data?.message || "Somthing went wrong");
     // console.log("error message", error?.data?.message);

@@ -16,8 +16,8 @@ const AutoLogout = () => {
       }
     }
     checkIfLoggedIn();
-  }, []);
-  return;
+  }, [dispatch]);
+  return <></>;
 };
 
 export default AutoLogout;

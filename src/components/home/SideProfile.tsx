@@ -81,7 +81,10 @@ const SideProfile = () => {
             <p className="text-sm text-center ">
               <span className="font-semibold">Joined: </span>
               {profile?.createdAt
-                ? new Date(profile?.createdAt).toLocaleDateString()
+                ? new Date(profile?.createdAt).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                  })
                 : ""}
             </p>
           </div>

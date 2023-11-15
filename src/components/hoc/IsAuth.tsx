@@ -12,7 +12,7 @@ export default function isAuth(Component: any) {
         console.log("redirecting", auth);
         return redirect("/");
       }
-    }, []);
+    }, [auth]);
 
     if (auth) {
       return null;

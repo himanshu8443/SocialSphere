@@ -5,7 +5,7 @@ import Actions from "./Actions";
 
 const Nav = () => {
   return (
-    <div className="bg-gray-200 dark:bg-gray-800 h-16 w-full">
+    <div className="bg-gray-100 dark:bg-gray-800 h-16 w-full">
       <div className="flex justify-between items-center h-full w-full max-w-[90%] mx-auto px-5">
         <Link href="/">
           <div className="flex items-center gap-5 cursor-pointer h-28 w-64">

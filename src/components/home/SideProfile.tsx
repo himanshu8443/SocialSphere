@@ -6,17 +6,30 @@ import AddLocationIcon from "@mui/icons-material/AddLocation";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import Image from "next/image";
 import VerifiedIcon from "@mui/icons-material/Verified";
+import { useAppSelector, useAppDispatch } from "@/lib/hook";
+import { setUser } from "@/redux/slices/user";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 
 const SideProfile = () => {
+  const dispatch = useAppDispatch();
   const [profile, setProfile] = useState<any>();
-  const [loading, setLoading] = useState(false);
+  const user = useAppSelector((state) => state.user);
   useEffect(() => {
     async function getUserDetail() {
-      setLoading(true);
       const profile = await getUserDetails("friends", "pendingFriends");
-      setProfile(profile.data);
-      setLoading(false);
       console.log(profile);
+
+      if (profile?.success !== true) {
+        return;
+      }
+      dispatch(
+        setUser({
+          name: profile.data.name,
+          email: profile.data.email,
+          profileImage: profile.data.profileImage,
+        })
+      );
+      setProfile(profile.data);
     }
     getUserDetail();
   }, []);
@@ -41,76 +54,80 @@ const SideProfile = () => {
       : window.btoa(str);
 
   return (
-    <div className=" dark:bg-gray-800 bg-gray-100 rounded-md shadow-md p-2 w-[330px]">
-      {!loading ? (
-        <>
-          <div className="flex justify-center gap-4 items-center">
-            <Image
-              placeholder={`data:image/svg+xml;base64,${toBase64(
+    <div className="flex justify-between items-start dark:bg-gray-800 bg-gray-100 rounded-md shadow-md p-2 w-[330px] ">
+      <div>
+        <div className="flex justify-center gap-4 items-center">
+          <Image
+            placeholder={`data:image/svg+xml;base64,${toBase64(
+              shimmer(700, 475)
+            )}`}
+            src={profile?.profileImage || user?.profileImage}
+            alt="profile"
+            width={70}
+            height={70}
+            className="rounded-[100%] aspect-square"
+            onError={(e) => {
+              e.currentTarget.src = `data:image/svg+xml;base64,${toBase64(
                 shimmer(700, 475)
-              )}`}
-              src={profile?.profileImage}
-              alt="profile"
-              width={70}
-              height={70}
-              className="rounded-[100%] aspect-square"
-              onError={(e) => {
-                e.currentTarget.src = `data:image/svg+xml;base64,${toBase64(
-                  shimmer(700, 475)
-                )}`;
-              }}
-            />
-            <div className="flex flex-col justify-center">
-              <div className="flex gap-3 items-center">
-                <h1 className="text-lg font-semibold">{profile?.name}</h1>
-                <VerifiedIcon
-                  titleAccess={profile?.verified ? "verified" : "Unverified"}
-                  className={` ${
-                    profile?.verified ? "text-primary-500" : "text-gray-600"
-                  }`}
-                />
-              </div>
-              <p className=" text-xs text-gray-500 max-w-[200px] truncate">
-                {profile?.email}
-              </p>
-            </div>
-          </div>
-          <p className="text-sm text-center mt-1 ">{profile?.about}</p>
-          <div className="flex  items-center gap-2 mt-4  text-gray-300">
-            <CalendarMonthIcon className=" scale-75" />
-            <p className="text-sm text-center ">
-              <span className="font-semibold">Joined: </span>
-              {profile?.createdAt
-                ? new Date(profile?.createdAt).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                  })
-                : ""}
-            </p>
-          </div>
-          <div className="flex  items-center gap-2 mt-2  text-gray-300">
-            <AddLocationIcon className=" scale-75" />
-            <p className="text-sm text-center ">
-              {profile?.location || "Earth"}
-            </p>
-          </div>
-          <hr className="my-2 border-gray-300 dark:border-gray-600" />
-          <div className="flex justify-between max-w-[70%] mx-auto items-center px-3">
-            <div className="flex flex-col justify-center items-center">
-              <h1 className="text-sm">{profile?.friends?.length || 0}</h1>
-              <p className="text-xs text-gray-400">Friends</p>
-            </div>
-            <div className="flex flex-col justify-center items-center">
-              <h1 className="text-sm">
-                {profile?.pendingFriends?.length || 0}
+              )}`;
+            }}
+          />
+          <div className="flex flex-col justify-center">
+            <div className="flex gap-3 items-center">
+              <h1 className="text-lg font-semibold">
+                {profile?.name || user?.name}
               </h1>
-              <p className="text-xs text-gray-400">Requests</p>
+              <VerifiedIcon
+                titleAccess={profile?.verified ? "verified" : "Unverified"}
+                className={` ${
+                  profile?.verified
+                    ? "text-primary-500"
+                    : "text-gray-300 dark:text-gray-600"
+                }`}
+              />
             </div>
+            <p className=" text-xs text-gray-500 max-w-[200px] truncate">
+              {profile?.email || user?.email}
+            </p>
           </div>
-        </>
-      ) : (
-        <div className="flex animate-pulse items-center justify-center w-full h-36 bg-gray-300 rounded dark:bg-gray-700"></div>
-      )}
+        </div>
+        <p className="text-sm text-center mt-1 ">
+          {profile?.about || "loading..."}
+        </p>
+        <div className="flex  items-center gap-2 mt-4 dark:text-gray-300 text-gray-500 ">
+          <CalendarMonthIcon className=" scale-75" />
+          <p className="text-sm text-center ">
+            <span className="font-semibold">Joined: </span>
+            {profile?.createdAt
+              ? new Date(profile?.createdAt).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                })
+              : ""}
+          </p>
+        </div>
+        <div className="flex  items-center gap-2 mt-2 dark:text-gray-300 text-gray-500">
+          <AddLocationIcon className=" scale-75" />
+          <p className="text-sm text-center ">{profile?.location || "Earth"}</p>
+        </div>
+        <hr className="my-2 border-gray-300 dark:border-gray-600" />
+        <div className="flex justify-between max-w-[70%] mx-auto items-center px-3">
+          <button className="flex flex-col justify-center items-center">
+            <h1 className="text-sm">{profile?.friends?.length || 0}</h1>
+            <p className="text-xs text-gray-400">Friends</p>
+          </button>
+          <button className="flex flex-col justify-center items-center">
+            <h1 className="text-sm">{profile?.pendingFriends?.length || 0}</h1>
+            <p className="text-xs text-gray-400">Requests</p>
+          </button>
+        </div>
+      </div>
+      <button
+        className="border-[1px] shadow-sm shadow-gray-300 dark:shadow-gray-700 dark:border-gray-700 border-gray-200 p-1 rounded-lg  bg-gray-100 hover:dark:bg-gray-700 dark:bg-gray-800 hover:bg-slate-200 active:bg-gray-100 dark:active:bg-gray-800"
+        title="Edit Profile"
+      >
+        <EditOutlinedIcon className="text-primary-600" />
+      </button>
     </div>
   );
 };

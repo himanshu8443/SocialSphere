@@ -17,7 +17,7 @@ const ThemeSwitcher = () => {
   }
 
   return (
-    <div>
+    <div className="dark:border-gray-700 border-gray-200 shadow-sm shadow-gray-300 dark:shadow-gray-700 p-2 rounded-lg border  bg-gray-100 hover:dark:bg-gray-700 dark:bg-gray-800 hover:bg-slate-200 active:bg-gray-100 dark:active:bg-gray-800">
       {theme === "light" ? (
         <button onClick={() => setTheme("dark")}>
           <NightsStayIcon className="text-primary-600  scale-125" />

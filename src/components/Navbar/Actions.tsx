@@ -26,9 +26,9 @@ const Actions = () => {
           </Link>
         </div>
       ) : (
-        <div className="flex items-center gap-5">
+        <button className="flex items-center gap-5 shadow-sm shadow-gray-300 dark:shadow-gray-700 dark:border-gray-700 border-gray-200  p-2 rounded-lg border bg-gray-100 hover:dark:bg-gray-700 dark:bg-gray-800 hover:bg-slate-200 active:bg-gray-100 dark:active:bg-gray-800">
           <NotificationsNoneOutlinedIcon className=" text-primary-600  text-4xl" />
-        </div>
+        </button>
       )}
       <ThemeSwitcher />
       <Account user={user} />

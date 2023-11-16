@@ -94,7 +94,7 @@ export const authRouter = router({
       const expires = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7);
       ctx.res.setHeader(
         "Set-Cookie",
-        `token=${token}; path=/; httponly; expires=${expires.toUTCString()} samesite=strict; secure`
+        `token=${token}; path=/; httponly; expires=${expires.toUTCString()}; samesite=none; secure`
       );
       user.password = "";
       return {
@@ -110,7 +110,7 @@ export const authRouter = router({
       "Set-Cookie",
       `token=; path=/; expires=${new Date(
         Date.now()
-      ).toUTCString()}; httponly; samesite=strict; secure`
+      ).toUTCString()}; httponly; samesite=none; secure`
     );
     return {
       success: true,

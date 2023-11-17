@@ -4,7 +4,6 @@ import { Poppins } from "next/font/google";
 import ReduxProvider from "@/redux/provider";
 import ThemeProvider from "@/components/theme/ThemeProvider";
 import AutoLogout from "@/components/AutoLogout";
-import Nav from "../components/navbar/Nav";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
 

@@ -47,13 +47,19 @@ const Modal = ({ post, setPost }: { post: Post; setPost: Dispatch<Post> }) => {
             />
           )}
 
-          <div className="flex flex-col space-y-2">
+          <div className="flex flex-col space-y-2 mt-2">
             <div className="flex space-x-2">
-              <button className="flex space-x-2 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-md p-2">
+              <button
+                className="flex space-x-2 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-md p-2"
+                onClick={() => setPost({ active: true, type: "image" })}
+              >
                 <ImageIcon className="text-primary-600 scale-110" />
                 <p className="text-gray-500 dark:text-gray-400">Photo</p>
               </button>
-              <button className="flex space-x-2 p-2 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-md">
+              <button
+                className="flex space-x-2 p-2 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-md"
+                onClick={() => setPost({ active: true, type: "video" })}
+              >
                 <VideoCallIcon className="text-primary-600 scale-125" />
                 <p className="text-gray-500 dark:text-gray-400">Video</p>
               </button>

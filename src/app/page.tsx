@@ -1,4 +1,4 @@
-import Main from "@/components/home/main/index";
+import Main from "@/components/home/main/Main";
 import SideProfile from "@/components/home/SideProfile";
 import Sponsor from "@/components/home/Sponsor";
 

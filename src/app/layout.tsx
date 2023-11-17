@@ -3,9 +3,10 @@ import { ToastContainer } from "react-toastify";
 import { Poppins } from "next/font/google";
 import ReduxProvider from "@/redux/provider";
 import ThemeProvider from "@/components/theme/ThemeProvider";
-import AutoLogout from "@/components/AutoLogout";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
+import Nav from "../components/Navbar/Nav";
+import AutoLogout from "@/components/AutoLogout";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -32,7 +33,7 @@ export default function RootLayout({
           />
           <ThemeProvider>
             <AutoLogout />
-            {/* <Nav /> */}
+            <Nav />
             {children}
           </ThemeProvider>
         </ReduxProvider>

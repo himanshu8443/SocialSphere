@@ -1,13 +1,13 @@
-import Feed from "@/components/home/Feed";
+import Main from "@/components/home/main/Index";
 import SideProfile from "@/components/home/SideProfile";
-import Sponser from "@/components/home/Sponser";
+import Sponsor from "@/components/home/Sponsor";
 
 export default function Home() {
   return (
     <div className=" flex gap-10 p-5 justify-between max-w-[1300px] mx-auto">
       <SideProfile />
-      <Feed />
-      <Sponser />
+      <Main />
+      <Sponsor />
     </div>
   );
 }

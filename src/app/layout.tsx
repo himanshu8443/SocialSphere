@@ -5,7 +5,7 @@ import ReduxProvider from "@/redux/provider";
 import ThemeProvider from "@/components/theme/ThemeProvider";
 import "react-toastify/dist/ReactToastify.css";
 import "./globals.css";
-import Nav from "@/components/Navbar/Nav";
+import Nav from "@/components/navbar/Nav";
 import AutoLogout from "@/components/AutoLogout";
 
 const poppins = Poppins({

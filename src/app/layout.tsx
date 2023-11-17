@@ -32,7 +32,7 @@ export default function RootLayout({
           />
           <ThemeProvider>
             <AutoLogout />
-            <Nav />
+            {/* <Nav /> */}
             {children}
           </ThemeProvider>
         </ReduxProvider>

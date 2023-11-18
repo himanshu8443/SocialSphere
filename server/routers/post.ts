@@ -51,7 +51,7 @@ export const postRouter = router({
       });
       return {
         success: true,
-        message: "Successfully created post",
+        message: "Post created",
         data: post,
       };
     }),
@@ -140,6 +140,16 @@ export const postRouter = router({
         take: limit,
         orderBy: {
           createdAt: "desc",
+        },
+        include: {
+          User: {
+            select: {
+              id: true,
+              name: true,
+              profileImage: true,
+              emailVerified: true,
+            },
+          },
         },
       });
       return posts;

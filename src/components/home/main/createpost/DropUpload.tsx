@@ -21,7 +21,7 @@ export default function Upload({
           content={{
             allowedContent: Type,
           }}
-          className="ut-allowed-content:text-gray-400 ut-label:text-primary-500 h-[300px] ut-button:bg-primary-700 data-[data-ut-element=button]:"
+          className="ut-allowed-content:text-gray-400 ut-label:text-primary-500 h-[300px] ut-button:bg-primary-700 data-[data-ut-element=button]: cursor-pointer"
           endpoint={Type}
           onClientUploadComplete={(res: any) => {
             setPost({ ...post, url: (res[0].url as string) || null });
@@ -39,7 +39,7 @@ export default function Upload({
             width={400}
             height={400}
             alt="Img"
-            className="max-w-full w-[400px] object-cover h-[400px]"
+            className="max-w-full w-auto object-cover h-[400px]"
           />
         </div>
       ) : (

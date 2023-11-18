@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { trpc } from "../../trpc/trpc";
 
 export async function createPost({
@@ -15,15 +16,30 @@ export async function createPost({
       src,
       type,
     });
-    console.log("result", result);
-    return {
-      success: true,
-      message: "Successfully created post",
-      data: result,
-    };
+    // console.log("result", result);
+    if (result.success) toast.success(result.message);
+    return result;
   } catch (error: any) {
     console.log("error message", error?.data?.message);
     console.log("error", error);
+    toast.error(error?.data?.message);
+    return {
+      success: false,
+      message: error?.data?.message,
+    };
+  }
+}
+
+// get posts
+export async function getFeedPosts() {
+  try {
+    const result = await trpc.posts.getPosts.query();
+    console.log("result", result);
+    return result;
+  } catch (error: any) {
+    console.log("error message", error?.data?.message);
+    console.log("error", error);
+    toast.error(error?.data?.message);
     return {
       success: false,
       message: error?.data?.message,

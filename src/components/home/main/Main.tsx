@@ -1,4 +1,4 @@
-import Feed from "./Feed";
+import Feed from "./feed/Feed";
 import CreatePost from "./createpost/CreatePost";
 
 const Main = () => {

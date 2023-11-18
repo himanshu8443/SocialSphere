@@ -2,19 +2,16 @@ import { trpc } from "../../trpc/trpc";
 
 export async function createPost({
   title,
-  content,
   src,
   type,
 }: {
   title: string;
-  content?: string;
   src?: string;
-  type: "image" | "video";
+  type: "image" | "video" | "text";
 }) {
   try {
     const result = await trpc.posts.createPost.mutate({
       title,
-      content,
       src,
       type,
     });

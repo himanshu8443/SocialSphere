@@ -10,7 +10,7 @@ export const postRouter = router({
         title: z.string(),
         content: z.string().optional(),
         src: z.string().url().optional(),
-        type: z.enum(["image", "video"]),
+        type: z.enum(["image", "video", "text"]),
       })
     )
     .mutation(async ({ input, ctx }) => {
@@ -49,7 +49,11 @@ export const postRouter = router({
           },
         },
       });
-      return post;
+      return {
+        success: true,
+        message: "Successfully created post",
+        data: post,
+      };
     }),
 
   // Update a post

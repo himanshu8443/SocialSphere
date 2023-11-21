@@ -1,6 +1,6 @@
 import { UploadDropzone } from "@/lib/uploadthing";
 import { toast } from "react-toastify";
-import { Dispatch, useState } from "react";
+import { Dispatch } from "react";
 import Image from "next/image";
 import { Post } from "./CreatePost";
 

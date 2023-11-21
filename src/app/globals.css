@@ -6,17 +6,21 @@
   background-color: black;
 }
 
-
-
 .Toastify__progress-bar--success {
   background: #fff;
-
 }
 
 .Toastify__close-button {
   color: white;
 }
 
+video::-webkit-media-controls-fullscreen-button {
+  display: none;
+}
+
+video::-moz-controls {
+  display: none;
+}
 
 .small-loader {
   width: 20px;
@@ -35,4 +39,11 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+.icon-flipped {
+  transform: scaleX(-1);
+  -moz-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  -ms-transform: scaleX(-1);
 }

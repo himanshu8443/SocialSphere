@@ -9,7 +9,7 @@ export const postRouter = router({
       z.object({
         title: z.string(),
         content: z.string().optional(),
-        src: z.string().url().optional(),
+        src: z.string().optional(),
         type: z.enum(["image", "video", "text"]),
       })
     )
@@ -152,7 +152,11 @@ export const postRouter = router({
           },
         },
       });
-      return posts;
+      return {
+        success: true,
+        message: "Posts fetched",
+        data: posts,
+      };
     }),
 
   // Get a post by id

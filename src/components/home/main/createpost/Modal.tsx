@@ -24,12 +24,16 @@ const Modal = ({ post, setPost }: { post: Post; setPost: Dispatch<Post> }) => {
   const user = useAppSelector((state) => state.user);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    if (!post.url || !post.type) return;
+    if (
+      (post.type !== "text" && !post.url) ||
+      (post.type !== "text" && !post.type)
+    )
+      return;
     setLoading(true);
     const postdata = await createPost({
       title: data.content,
       type: post.type,
-      src: post.url,
+      src: post.url || "none",
     });
     setLoading(false);
     if (postdata.success) {

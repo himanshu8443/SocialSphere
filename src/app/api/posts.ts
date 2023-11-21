@@ -34,15 +34,11 @@ export async function createPost({
 export async function getFeedPosts() {
   try {
     const result = await trpc.posts.getPosts.query();
-    console.log("result", result);
     return result;
   } catch (error: any) {
     console.log("error message", error?.data?.message);
     console.log("error", error);
     toast.error(error?.data?.message);
-    return {
-      success: false,
-      message: error?.data?.message,
-    };
+    return error?.data?.message;
   }
 }

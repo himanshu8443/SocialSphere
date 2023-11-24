@@ -27,6 +27,7 @@ const Login = () => {
     if (res.success === true) {
       dispatch(
         setUser({
+          id: res.data.id as string,
           name: res.data.name,
           email: res.data.email,
           profileImage: res.data.profileImage,

@@ -17,13 +17,13 @@ const SideProfile = () => {
   useEffect(() => {
     async function getUserDetail() {
       const profile = await getUserDetails("friends", "pendingFriends");
-      console.log(profile);
 
       if (profile?.success !== true) {
         return;
       }
       dispatch(
         setUser({
+          id: profile.data.id,
           name: profile.data.name,
           email: profile.data.email,
           profileImage: profile.data.profileImage,

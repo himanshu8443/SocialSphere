@@ -1,5 +1,10 @@
 import { TRPCError } from "@trpc/server";
-import { router, publicProcedure, protectedProcedure } from "../trpc/trpc";
+import {
+  router,
+  publicProcedure,
+  protectedProcedure,
+  partialAuthProcedure,
+} from "../trpc/trpc";
 import { z } from "zod";
 
 export const postRouter = router({
@@ -132,10 +137,25 @@ export const postRouter = router({
     }),
 
   // Get all posts by created date
-  getPosts: publicProcedure
+  getPosts: partialAuthProcedure
     .input(z.number().optional())
     .query(async ({ input, ctx }) => {
       const limit = input || 999;
+      // check if user is authenticated
+      if (ctx.isAuthenticated) {
+        const user = await ctx.db.user.findUnique({
+          where: {
+            id: ctx.user.userId,
+          },
+        });
+        if (!user) {
+          throw new TRPCError({
+            code: "BAD_REQUEST",
+            message: "User not found",
+          });
+        }
+      }
+
       const posts = await ctx.db.post.findMany({
         take: limit,
         orderBy: {
@@ -148,6 +168,22 @@ export const postRouter = router({
               name: true,
               profileImage: true,
               emailVerified: true,
+              friends: ctx.isAuthenticated && {
+                where: {
+                  id: ctx.user.userId,
+                },
+                select: {
+                  id: true,
+                },
+              },
+            },
+          },
+          likedBy: ctx.isAuthenticated && {
+            where: {
+              id: ctx.user.userId,
+            },
+            select: {
+              id: true,
             },
           },
         },
@@ -234,7 +270,21 @@ export const postRouter = router({
             },
           },
         });
-        return post;
+        await ctx.db.post.update({
+          where: {
+            id: postId,
+          },
+          data: {
+            likes: {
+              decrement: 1,
+            },
+          },
+        });
+        return {
+          success: true,
+          message: "Post unliked",
+          data: post,
+        };
       } else {
         const post = await ctx.db.post.update({
           where: {
@@ -260,7 +310,21 @@ export const postRouter = router({
             },
           },
         });
-        return post;
+        await ctx.db.post.update({
+          where: {
+            id: postId,
+          },
+          data: {
+            likes: {
+              increment: 1,
+            },
+          },
+        });
+        return {
+          success: true,
+          message: "Post liked",
+          data: post,
+        };
       }
     }),
 });

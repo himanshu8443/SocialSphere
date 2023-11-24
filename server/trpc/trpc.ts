@@ -42,3 +42,25 @@ const isAuthenticated = t.middleware(({ ctx, next }) => {
 });
 
 export const protectedProcedure = t.procedure.use(isAuthenticated);
+
+const partialAuth = t.middleware(({ ctx, next }) => {
+  if (ctx?.req?.cookies?.token) {
+    return next({
+      ctx: {
+        user: jwt.verify(
+          ctx.req.cookies.token,
+          process.env.JWT_SECRET!
+        ) as JwtPayload,
+        isAuthenticated: true,
+      },
+    });
+  }
+  return next({
+    ctx: {
+      user: null,
+      isAuthenticated: false,
+    },
+  });
+});
+
+export const partialAuthProcedure = t.procedure.use(partialAuth);

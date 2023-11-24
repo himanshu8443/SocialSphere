@@ -26,7 +26,7 @@ const storage =
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["email", "name", "auth", "profileImage"],
+  whitelist: ["email", "name", "auth", "profileImage", "id"],
 };
 
 const userPersistedReducer = persistReducer(persistConfig, userSlice.reducer);

@@ -19,7 +19,7 @@ const VideoPlayer = ({ src }: { src: string }) => {
             setPlaying(true); // Update playing state
           }
         } else {
-          if (playing) {
+          if (playing && videoRef.current) {
             videoRef.current!.pause();
             setPlaying(false);
           }

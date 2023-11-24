@@ -42,3 +42,16 @@ export async function getFeedPosts() {
     return error?.data?.message;
   }
 }
+
+// like/unlike
+export async function likeUnlikePost(postId: string) {
+  try {
+    const result = await trpc.posts.LikeUnlikePost.mutate(postId);
+    return result;
+  } catch (error: any) {
+    console.log("error message", error?.data?.message);
+    console.log("error", error);
+    toast.error(error?.data?.message);
+    return error?.data?.message;
+  }
+}

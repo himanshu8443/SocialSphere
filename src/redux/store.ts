@@ -3,7 +3,7 @@ import { persistReducer, persistStore } from "redux-persist";
 import thunk from "redux-thunk";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import { userSlice } from "./slices/user";
-import { modeSlice } from "./slices/mode";
+import { activePost } from "./slices/ActivePost";
 
 const createNoopStorage = () => {
   return {
@@ -30,12 +30,11 @@ const persistConfig = {
 };
 
 const userPersistedReducer = persistReducer(persistConfig, userSlice.reducer);
-const modePersistedReducer = persistReducer(persistConfig, modeSlice.reducer);
 
 export const store = configureStore({
   reducer: {
     user: userPersistedReducer,
-    mode: modePersistedReducer,
+    activePost: activePost.reducer,
   },
   middleware: [thunk],
 });

@@ -42,7 +42,7 @@ const VideoPlayer = ({ src }: { src: string }) => {
       disablePictureInPicture={true}
       controlsList="nodownload noplaybackrate"
       src={src}
-      className="rounded-md aspect-auto max-h-[700px] object-cover w-[600px] max-w-[650px]"
+      className="rounded-md aspect-auto max-h-[600px] object-cover w-[600px] max-w-[530px]"
       controls
     ></video>
   );

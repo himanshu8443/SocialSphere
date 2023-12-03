@@ -75,6 +75,25 @@ export const commentsRouter = router({
           },
         },
       });
+      const comments = await ctx.db.comment.findMany({
+        where: {
+          postId,
+        },
+        include: {
+          User: {
+            select: {
+              id: true,
+              name: true,
+              profileImage: true,
+            },
+          },
+        },
+      });
+      return {
+        success: true,
+        message: "Successfully created comment",
+        data: comments,
+      };
     }),
 
   // delete a comment
@@ -151,6 +170,42 @@ export const commentsRouter = router({
       return {
         success: true,
         message: "Successfully deleted comment",
+      };
+    }),
+
+  // get comments by post id
+  getCommentsByPostId: publicProcedure
+    .input(
+      z.object({
+        postId: z.string(),
+      })
+    )
+    .query(async ({ input, ctx }) => {
+      const { postId } = input;
+      const comments = await ctx.db.comment.findMany({
+        where: {
+          postId,
+        },
+        include: {
+          User: {
+            select: {
+              id: true,
+              name: true,
+              profileImage: true,
+            },
+          },
+        },
+      });
+      if (!comments) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Comments not found",
+        });
+      }
+      return {
+        success: true,
+        message: "Successfully fetched comments",
+        data: comments,
       };
     }),
 });

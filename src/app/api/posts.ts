@@ -55,3 +55,17 @@ export async function likeUnlikePost(postId: string) {
     return error?.data?.message;
   }
 }
+
+// get post by id
+
+export async function getPostById(postId: string) {
+  try {
+    const result = await trpc.posts.getPostById.query(postId);
+    return result;
+  } catch (error: any) {
+    console.log("error message", error?.data?.message);
+    console.log("error", error);
+    toast.error(error?.data?.message);
+    return error?.data?.message;
+  }
+}

@@ -26,31 +26,9 @@ const Post = ({
 }) => {
   const dispatch = useAppDispatch();
   const [likedLoading, setLikedLoading] = useState(false);
-  const timeAgo = (date: string) => {
-    //get how many hours/days/weeks/months/years ago
-    if (!date) return "";
-    const startDate = datetime.parseISO(date);
-    const endDate = new Date();
-    const hours = Math.abs(datetime.differenceInHours(startDate, endDate));
-    const days = Math.abs(datetime.differenceInDays(startDate, endDate));
-    const weeks = Math.abs(datetime.differenceInWeeks(startDate, endDate));
-    const months = Math.abs(datetime.differenceInMonths(startDate, endDate));
-    const years = Math.abs(datetime.differenceInYears(startDate, endDate));
-    //return the correct time ago
-    if (hours < 24) {
-      return `${hours}h ago`;
-    } else if (days < 7) {
-      return `${days}d ago`;
-    } else if (weeks < 4) {
-      return `${weeks}w ago`;
-    } else if (months < 12) {
-      return `${months}m ago`;
-    } else {
-      return `${years} years ago`;
-    }
-  };
 
   const likeUnlike = async (postId: string) => {
+    if (!posts) return;
     const updatedPosts = [...posts];
     const isLiked = updatedPosts.find((post) => post.id === postId)?.likedBy
       .length;
@@ -113,7 +91,7 @@ const Post = ({
       <div className="flex flex-col gap-3 mt-3">
         <p
           className={`text-gray-600 dark:text-gray-300 overflow-y-auto max-h-[500px] text-justify px-2 ${
-            post.type !== "text" ? "text-lg font-medium " : ""
+            post?.type !== "text" ? "text-lg font-medium " : ""
           }`}
         >
           {post?.title}
@@ -123,10 +101,9 @@ const Post = ({
             <Image
               alt="Post"
               src={post?.src}
-              objectFit="cover"
               height={500}
               width={550}
-              className="rounded-md h-auto max-h-[500px] object-cover w-auto max-w-[530px]"
+              className="rounded-md h-auto max-h-[500px] object-contain w-auto max-w-[530px]"
             />
           </div>
         ) : post?.type === "video" ? (
@@ -194,3 +171,32 @@ const Post = ({
 };
 
 export default Post;
+
+export const timeAgo = (date: string) => {
+  //get how many hours/days/weeks/months/years ago
+  if (!date) return "";
+  const startDate = datetime.parseISO(date);
+  const endDate = new Date();
+  const minutes = Math.abs(datetime.differenceInMinutes(startDate, endDate));
+  const hours = Math.abs(datetime.differenceInHours(startDate, endDate));
+  const days = Math.abs(datetime.differenceInDays(startDate, endDate));
+  const weeks = Math.abs(datetime.differenceInWeeks(startDate, endDate));
+  const months = Math.abs(datetime.differenceInMonths(startDate, endDate));
+  const years = Math.abs(datetime.differenceInYears(startDate, endDate));
+  //return the correct time ago
+  if (minutes < 1) {
+    return "Just now";
+  } else if (minutes < 60) {
+    return `${minutes}m ago`;
+  } else if (hours < 24) {
+    return `${hours}h ago`;
+  } else if (days < 7) {
+    return `${days}d ago`;
+  } else if (weeks < 4) {
+    return `${weeks}w ago`;
+  } else if (months < 12) {
+    return `${months}M ago`;
+  } else {
+    return `${years}Y ago`;
+  }
+};

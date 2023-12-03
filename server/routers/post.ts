@@ -196,7 +196,7 @@ export const postRouter = router({
     }),
 
   // Get a post by id
-  getPostById: publicProcedure
+  getPostById: partialAuthProcedure
     .input(z.string())
     .query(async ({ input, ctx }) => {
       const id = input;
@@ -204,8 +204,42 @@ export const postRouter = router({
         where: {
           id,
         },
+        include: {
+          Comment: {
+            include: {
+              User: {
+                select: {
+                  id: true,
+                  name: true,
+                  profileImage: true,
+                  emailVerified: true,
+                },
+              },
+            },
+          },
+          User: {
+            select: {
+              id: true,
+              name: true,
+              profileImage: true,
+              emailVerified: true,
+            },
+          },
+          likedBy: ctx.isAuthenticated && {
+            where: {
+              id: ctx.user.userId,
+            },
+            select: {
+              id: true,
+            },
+          },
+        },
       });
-      return post;
+      return {
+        success: true,
+        message: "Post fetched",
+        data: post,
+      };
     }),
 
   // Like/Unlike a post

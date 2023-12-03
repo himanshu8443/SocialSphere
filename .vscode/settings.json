@@ -3,6 +3,6 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnPaste": true,
   "terminal.integrated.fontSize": 17,
-  "editor.wordWrap": "on",
-  "editor.wordWrapColumn": 100
+  "editor.wordWrap": "wordWrapColumn",
+  "editor.wordWrapColumn": 130
 }

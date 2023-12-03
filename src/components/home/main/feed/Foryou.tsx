@@ -19,7 +19,7 @@ const Foryou = () => {
   return (
     <div className="flex flex-col space-y-8 max-w-[650px]">
       {posts.map((post) => (
-        <Post post={post} posts={posts} setPosts={setPosts} />
+        <Post key={post?.id} post={post} posts={posts} setPosts={setPosts} />
       ))}
     </div>
   );

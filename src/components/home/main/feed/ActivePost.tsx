@@ -4,12 +4,15 @@ import { getPostById } from "@/app/api/posts";
 import Image from "next/image";
 import VideoPlayer from "./VideoPlayer";
 import { timeAgo } from "./Post";
-import { createComment } from "@/app/api/comments";
+import { createComment, deleteComment } from "@/app/api/comments";
 import SendIcon from "@mui/icons-material/Send";
 import { getComments } from "@/app/api/comments";
+import Comments from "./PostComments";
+import { useRouter } from "next/navigation";
 
 const ActivePost = () => {
   const params = useSearchParams().get("p");
+  const router = useRouter();
   const [post, setPost] = useState<any>();
   const [content, setContent] = useState<string>("");
   const [CommentLoading, setCommentLoading] = useState(false);
@@ -53,10 +56,27 @@ const ActivePost = () => {
     }
   };
 
+  const deleteUserComment = async (id: string) => {
+    const res = await deleteComment(id);
+    console.log(res);
+    if (res?.success) {
+      setComments(
+        comments.filter((comment) => comment?.id.toString() !== id.toString())
+      );
+    }
+  };
+
   return (
     params && (
-      <div className="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-        <div className="flex  relative">
+      <div
+        className="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+        onClick={() =>
+          router.replace("/", {
+            scroll: false,
+          })
+        }
+      >
+        <div className="flex  relative" onClick={(e) => e.stopPropagation()}>
           <div className="flex flex-col dark:bg-gray-800 bg-gray-100  min-h-[500px] min-w-[400px]  rounded-l-md">
             {post?.type === "text" && (
               <p
@@ -118,31 +138,11 @@ const ActivePost = () => {
                   </p>
                 )}
                 {comments?.map((comment) => (
-                  <div
-                    key={comment?._id}
-                    className="flex flex-col justify-center gap-2  p-2 "
-                  >
-                    <hr className="border-gray-300 dark:border-gray-600" />
-
-                    <div className="flex space-x-2 justify-start items-center gap-2 ">
-                      <Image
-                        alt="Profile"
-                        src={comment?.User?.profileImage}
-                        width={30}
-                        height={30}
-                        className="rounded-full"
-                      />
-                      <p className="text-gray-500 dark:text-gray-300 hover:underline cursor-pointer font-semibold text-sm">
-                        {comment?.User?.name}
-                      </p>
-                      <p className="text-gray-500 dark:text-gray-400 font-semibold text-xs">
-                        • {timeAgo(comment?.createdAt)}
-                      </p>
-                    </div>
-                    <p className="text-gray-600 dark:text-gray-300 overflow-y-auto max-h-[600px] p-2 min-h-[43px] max-w-[500px] flex items-center text-justify px-2 ">
-                      {comment?.content}
-                    </p>
-                  </div>
+                  <Comments
+                    comment={comment}
+                    key={comment?.id}
+                    deleteUserComment={deleteUserComment}
+                  />
                 ))}
               </div>
             </div>

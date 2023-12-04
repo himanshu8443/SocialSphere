@@ -138,33 +138,33 @@ export const commentsRouter = router({
           message: "Post not found",
         });
       }
+      // await ctx.db.user.update({
+      //   where: {
+      //     id: ctx.user.userId,
+      //   },
+      //   data: {
+      //     comments: {
+      //       delete: {
+      //         id: commentId,
+      //       },
+      //     },
+      //   },
+      // });
+      // await ctx.db.post.update({
+      //   where: {
+      //     id: comment.postId,
+      //   },
+      //   data: {
+      //     Comment: {
+      //       delete: {
+      //         id: commentId,
+      //       },
+      //     },
+      //   },
+      // });
       await ctx.db.comment.delete({
         where: {
           id: commentId,
-        },
-      });
-      await ctx.db.user.update({
-        where: {
-          id: ctx.user.userId,
-        },
-        data: {
-          comments: {
-            disconnect: {
-              id: commentId,
-            },
-          },
-        },
-      });
-      await ctx.db.post.update({
-        where: {
-          id: comment.postId,
-        },
-        data: {
-          Comment: {
-            disconnect: {
-              id: commentId,
-            },
-          },
         },
       });
       return {

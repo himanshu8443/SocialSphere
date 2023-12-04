@@ -28,3 +28,16 @@ export const getComments = async (postId: string) => {
     return error?.data?.message;
   }
 };
+
+export const deleteComment = async (commentId: string) => {
+  try {
+    const result = await trpc.comments.deleteComment.mutate({ commentId });
+    if (result.success) toast.success(result.message);
+    return result;
+  } catch (error: any) {
+    console.log("error message", error?.data?.message);
+    console.log("error", error);
+    toast.error(error?.data?.message);
+    return error;
+  }
+};

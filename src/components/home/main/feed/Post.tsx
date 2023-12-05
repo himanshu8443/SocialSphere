@@ -29,7 +29,7 @@ const Post = ({
 
   const likeUnlike = async (postId: string) => {
     if (!posts) return;
-    const updatedPosts = [...posts];
+    const updatedPosts = JSON.parse(JSON.stringify(posts)) as any[];
     const isLiked = updatedPosts.find((post) => post.id === postId)?.likedBy
       .length;
     if (isLiked) {
@@ -38,10 +38,10 @@ const Post = ({
     } else {
       updatedPosts
         .find((post) => post.id === postId)
-        ?.likedBy.push({ id: postId });
+        ?.likedBy?.push({ id: postId });
       updatedPosts.find((post) => post.id === postId).likes++;
     }
-    console.log("updatedPosts", updatedPosts);
+    // console.log("updatedPosts", updatedPosts);
     setPosts(updatedPosts);
 
     setLikedLoading(true);
@@ -164,7 +164,11 @@ const Post = ({
         </button>
       </div>
       <p className="text-gray-500 dark:text-gray-400 px-3 mt-2">
-        {post?.likes} likes
+        {likedLoading
+          ? "Loading..."
+          : post?.likes > 1
+          ? `${post?.likes} likes`
+          : `${post?.likes} like`}
       </p>
     </div>
   );

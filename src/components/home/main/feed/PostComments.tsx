@@ -11,7 +11,7 @@ const Comments = ({
   comment: any;
   deleteUserComment: (id: string) => void;
 }) => {
-  const { user } = useAppSelector((state) => state);
+  const user = useAppSelector((state) => state.user);
 
   return (
     <div

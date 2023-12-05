@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Foryou from "./Foryou";
 import Friends from "./Friends";
-import Post from "./ActivePost";
+import ActivePost from "./ActivePost";
 
 const Feed = () => {
   const [activeTab, setActiveTab] = useState<0 | 1>(0);
@@ -32,7 +32,7 @@ const Feed = () => {
         </button>
       </div>
       {activeTab === 0 ? <Foryou /> : <Friends />}
-      <Post />
+      <ActivePost />
     </>
   );
 };

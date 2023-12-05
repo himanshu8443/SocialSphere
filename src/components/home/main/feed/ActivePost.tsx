@@ -9,6 +9,7 @@ import SendIcon from "@mui/icons-material/Send";
 import { getComments } from "@/app/api/comments";
 import Comments from "./PostComments";
 import { useRouter } from "next/navigation";
+import { useAppSelector } from "@/lib/hook";
 
 const ActivePost = () => {
   const params = useSearchParams().get("p");
@@ -16,24 +17,32 @@ const ActivePost = () => {
   const [post, setPost] = useState<any>();
   const [content, setContent] = useState<string>("");
   const [CommentLoading, setCommentLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [comments, setComments] = useState<any[]>([]);
+  const postData = useAppSelector((state) => state.activePost);
 
   useEffect(() => {
     let mounted = true;
     async function getPostData() {
       if (params) {
         // get post
-        const res = await getPostById(params);
-        if (res?.success && mounted) {
-          setPost(res.data);
+        setLoading(true);
+        if (postData?.post?.id !== params) {
+          const res = await getPostById(params);
+          if (res?.success && mounted) {
+            setPost(res.data);
+          }
+        } else {
+          setPost(postData?.post);
         }
 
         // get comments
         const comments = await getComments(params);
         if (comments?.success && mounted) {
           setComments(comments.data);
-          console.log("comments", comments.data);
+          // console.log("comments", comments.data);
         }
+        setLoading(false);
       }
     }
     getPostData();
@@ -70,11 +79,12 @@ const ActivePost = () => {
     params && (
       <div
         className="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
-        onClick={() =>
+        onClick={() => {
           router.replace("/", {
             scroll: false,
-          })
-        }
+          });
+          setPost(null);
+        }}
       >
         <div className="flex  relative" onClick={(e) => e.stopPropagation()}>
           <div className="flex flex-col dark:bg-gray-800 bg-gray-100  min-h-[500px] min-w-[400px]  rounded-l-md">
@@ -94,7 +104,7 @@ const ActivePost = () => {
                   src={post?.src}
                   height={700}
                   width={850}
-                  className=" h-auto max-h-[700px] object-contain w-auto max-w-[830px]"
+                  className=" h-auto max-h-[600px] object-contain w-auto max-w-[700px]"
                 />
               </div>
             ) : post?.type === "video" ? (
@@ -107,7 +117,7 @@ const ActivePost = () => {
           </div>
           <div className=" relative dark:bg-gray-800 bg-gray-100  ">
             <div className="flex space-x-2 justify-start items-center gap-2 p-2 w-[300px] dark:bg-gray-700 bg-gray-200 rounded-tr-md rounded-b-md">
-              <Image
+              <img
                 alt="Profile"
                 src={post?.User?.profileImage}
                 width={40}
@@ -132,7 +142,12 @@ const ActivePost = () => {
                 </p>
               )}
               <div className="h-[400px]  overflow-y-scroll">
-                {comments?.length === 0 && (
+                {loading && (
+                  <div className="flex justify-center items-center h-full">
+                    <span className="small-loader border-gray-500 dark:border-gray-200 border-b-transparent dark:border-b-transparent border-4"></span>
+                  </div>
+                )}
+                {comments?.length === 0 && !loading && (
                   <p className="text-gray-400 dark:text-gray-400 text-center font-semibold mt-10">
                     No comments yet
                   </p>
@@ -147,7 +162,7 @@ const ActivePost = () => {
               </div>
             </div>
             <div className="flex absolute bottom-0 justify-center items-center gap-2 dark:bg-gray-800 bg-gray-100 rounded-md  p-2 w-[300px] border-t dark:border-gray-500 border-gray-300">
-              <Image
+              <img
                 alt="Profile"
                 src={post?.User?.profileImage}
                 width={30}

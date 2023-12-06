@@ -28,7 +28,7 @@ const Feed = () => {
           }`}
           onClick={() => setActiveTab(1)}
         >
-          Friends
+          Following
         </button>
       </div>
       {activeTab === 0 ? <Foryou /> : <Friends />}

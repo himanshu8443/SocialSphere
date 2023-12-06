@@ -16,7 +16,7 @@ const SideProfile = () => {
   const user = useAppSelector((state) => state.user);
   useEffect(() => {
     async function getUserDetail() {
-      const profile = await getUserDetails("friends", "pendingFriends");
+      const profile = await getUserDetails("followers", "following");
 
       if (profile?.success !== true) {
         return;
@@ -113,12 +113,12 @@ const SideProfile = () => {
         <hr className="my-2 border-gray-300 dark:border-gray-600" />
         <div className="flex justify-between max-w-[70%] mx-auto items-center px-3">
           <button className="flex flex-col justify-center items-center">
-            <h1 className="text-sm">{profile?.friends?.length || 0}</h1>
-            <p className="text-xs text-gray-400">Friends</p>
+            <h1 className="text-sm">{profile?.followers?.length || 0}</h1>
+            <p className="text-xs text-gray-400">Followers</p>
           </button>
           <button className="flex flex-col justify-center items-center">
-            <h1 className="text-sm">{profile?.pendingFriends?.length || 0}</h1>
-            <p className="text-xs text-gray-400">Requests</p>
+            <h1 className="text-sm">{profile?.following?.length || 0}</h1>
+            <p className="text-xs text-gray-400">Following</p>
           </button>
         </div>
       </div>

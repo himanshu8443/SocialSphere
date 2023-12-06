@@ -13,6 +13,7 @@ import * as datetime from "date-fns";
 import { Dispatch } from "react";
 import { likeUnlikePost } from "@/app/api/posts";
 import { useState } from "react";
+import { followUser } from "@/app/api/friends";
 
 const Post = ({
   post,
@@ -51,6 +52,12 @@ const Post = ({
     setLikedLoading(false);
   };
 
+  const handleFollow = async (userId: string) => {
+    const res = await followUser({ userId });
+    if (!res?.success) {
+    }
+  };
+
   return (
     <div
       key={post?.id}
@@ -73,12 +80,13 @@ const Post = ({
           </p>
         </div>
         <div className="text-gray-500 dark:text-gray-400">
-          {post?.friends?.length > 0 ? (
+          {post?.User.followers?.length > 0 ? (
             <PeopleAltIcon className=" scale-125" />
           ) : (
             <button
               className="p-2 pr-3 active:bg-transparent dark:active:bg-transparent hover:bg-gray-200 dark:hover:bg-slate-700 rounded-full justify-center items-center flex"
               title="Add Friend"
+              onClick={() => handleFollow(post?.User?.id)}
             >
               <PersonAddIcon
                 className="text-primary-600 scale-[1.4]

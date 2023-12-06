@@ -6,8 +6,8 @@ export type UserIncludes =
   | "friends"
   | "likedPosts"
   | "savedPosts"
-  | "pendingFriends"
-  | "preferences";
+  | "followers"
+  | "following";
 
 export async function getUserDetails(...args: UserIncludes[]) {
   try {

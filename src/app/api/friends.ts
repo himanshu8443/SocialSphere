@@ -1,10 +1,13 @@
 import { trpc } from "../../trpc/trpc";
+import { toast } from "react-toastify";
 
-export async function sendFriendRequest({ userId }: { userId: string }) {
+export async function followUser({ userId }: { userId: string }) {
   try {
-    const result = await trpc.friends.sendFriendRequest.mutate({
+    console.log("userId", userId);
+    const result = await trpc.follow.followUser.mutate({
       userId,
     });
+    toast.success("User followed");
     return result;
   } catch (error: any) {
     return error;

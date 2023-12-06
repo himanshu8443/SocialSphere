@@ -14,10 +14,10 @@ export const userRouter = router({
         include: {
           posts: input?.includes("posts") ? true : false,
           comments: input?.includes("comments") ? true : false,
-          friends: input?.includes("friends") ? true : false,
+          followers: input?.includes("followers") ? true : false,
           likedPosts: input?.includes("likedPosts") ? true : false,
           savedPosts: input?.includes("savedPosts") ? true : false,
-          pendingFriends: input?.includes("pendingFriends") ? true : false,
+          following: input?.includes("following") ? true : false,
           preferences: input?.includes("preferences") ? true : false,
         },
       });

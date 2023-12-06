@@ -168,7 +168,7 @@ export const postRouter = router({
               name: true,
               profileImage: true,
               emailVerified: true,
-              friends: ctx.isAuthenticated && {
+              followers: ctx.isAuthenticated && {
                 where: {
                   id: ctx.user.userId,
                 },

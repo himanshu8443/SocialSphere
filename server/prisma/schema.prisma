@@ -8,27 +8,27 @@ datasource db {
 }
 
 model User {
-  id                     String       @id @default(cuid())
-  name                   String
-  password               String
-  email                  String      @unique
-  emailVerified          Boolean      @default(false)
-  profileImage           String?
-  friends                User[]       @relation("friends")
-  pendingFriends         User[]       @relation("pendingFriends")
-  pendingFriendsRelation User[]       @relation("pendingFriends")
-  friendsRelation        User[]       @relation("friends")
-  createdAt              DateTime     @default(now())
-  updatedAt              DateTime     @updatedAt
-  posts                  Post[]
-  about                  String?      @default("Hi, I'm using Sphere")
-  location               String?
-  twitter                String?
-  linkedin               String?
-  likedPosts             Post[]       @relation("likedBy")
-  savedPosts             Post[]       @relation("savedBy")
-  comments               Comment[]
-  preferences            Preferences?
+  id               String  @id @default(cuid())
+  name             String
+  password         String
+  email            String  @unique
+  emailVerified    Boolean @default(false)
+  profileImage     String?
+  followers        User[]  @relation("followers")
+  followerRelation User[]  @relation("followers")
+  following         User[]       @relation("following")
+  followingRelation User[]       @relation("following")
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+  posts             Post[]
+  about             String?      @default("Hi, I'm using Sphere")
+  location          String?
+  twitter           String?
+  linkedin          String?
+  likedPosts        Post[]       @relation("likedBy")
+  savedPosts        Post[]       @relation("savedBy")
+  comments          Comment[]
+  preferences       Preferences?
 }
 
 enum PostType {
@@ -38,7 +38,7 @@ enum PostType {
 }
 
 model Post {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   title       String
   type        PostType
   src         String?

@@ -69,3 +69,16 @@ export async function getPostById(postId: string) {
     return error?.data?.message;
   }
 }
+
+// get posts of user following
+export async function getPostsOfUserFollowing() {
+  try {
+    const result = await trpc.posts.getFollowingPosts.query();
+    return result;
+  } catch (error: any) {
+    console.log("error message", error?.data?.message);
+    console.log("error", error);
+    toast.error(error?.data?.message);
+    return error?.data?.message;
+  }
+}

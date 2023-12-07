@@ -19,7 +19,7 @@ const CreatePost = () => {
   });
 
   return (
-    <div className="dark:bg-gray-800 bg-gray-100 p-3 rounded-md  ">
+    <div className="dark:bg-gray-800 bg-gray-100 p-3 rounded-md   ">
       <button
         className="rounded-full text-left text-xl w-[500px] bg-gray-300 text-gray-600 dark:text-gray-100 dark:bg-slate-700 p-2 hover:dark:bg-slate-600 hover:bg-gray-200 "
         onClick={() => setPost({ active: true, type: "text" })}

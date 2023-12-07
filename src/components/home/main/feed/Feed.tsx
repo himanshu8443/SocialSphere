@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
 import Foryou from "./Foryou";
-import Friends from "./Friends";
 import ActivePost from "./ActivePost";
+import Following from "./Folllowing";
 
 const Feed = () => {
   const [activeTab, setActiveTab] = useState<0 | 1>(0);
@@ -31,7 +31,7 @@ const Feed = () => {
           Following
         </button>
       </div>
-      {activeTab === 0 ? <Foryou /> : <Friends />}
+      {activeTab === 0 ? <Foryou /> : <Following />}
       <ActivePost />
     </>
   );

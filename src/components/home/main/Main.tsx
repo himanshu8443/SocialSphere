@@ -3,7 +3,7 @@ import CreatePost from "./createpost/CreatePost";
 
 const Main = () => {
   return (
-    <div className="mr-56">
+    <div className=" flex flex-col items-center justify-center w-full">
       <CreatePost />
       <Feed />
     </div>

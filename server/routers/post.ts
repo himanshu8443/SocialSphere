@@ -361,4 +361,69 @@ export const postRouter = router({
         };
       }
     }),
+
+  // Get posts of users that the current user follows
+  getFollowingPosts: protectedProcedure
+    .input(z.number().optional())
+    .query(async ({ ctx, input }) => {
+      const limit = input || 999;
+      const followingList = await ctx.db.user.findUnique({
+        where: {
+          id: ctx.user.userId,
+        },
+        select: {
+          following: {
+            select: {
+              id: true,
+            },
+          },
+        },
+      });
+
+      const followingIds = followingList?.following.map((user) => user.id);
+
+      const posts = await ctx.db.post.findMany({
+        take: limit,
+        orderBy: {
+          createdAt: "desc",
+        },
+        where: {
+          createdById: {
+            in: followingIds,
+          },
+        },
+        include: {
+          User: {
+            select: {
+              id: true,
+              name: true,
+              profileImage: true,
+              emailVerified: true,
+              followers: {
+                where: {
+                  id: ctx.user.userId,
+                },
+                select: {
+                  id: true,
+                },
+              },
+            },
+          },
+          likedBy: {
+            where: {
+              id: ctx.user.userId,
+            },
+            select: {
+              id: true,
+            },
+          },
+        },
+      });
+
+      return {
+        success: true,
+        message: "Posts fetched",
+        data: posts,
+      };
+    }),
 });

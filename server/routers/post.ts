@@ -380,7 +380,7 @@ export const postRouter = router({
         },
       });
 
-      const followingIds = followingList?.following.map((user) => user.id);
+      const followingIds = followingList?.following.map((user: any) => user.id);
 
       const posts = await ctx.db.post.findMany({
         take: limit,

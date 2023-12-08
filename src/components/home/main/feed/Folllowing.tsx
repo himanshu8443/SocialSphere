@@ -17,9 +17,9 @@ const Following = () => {
   }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center max-w-[650px] w-[570px]">
+    <div className="flex flex-col justify-center items-center w-[540px] min-h-screen">
       {posts?.length === 0 && (
-        <div className="flex items-center justify-center h-96 w-60">
+        <div className="flex items-center justify-center w-60">
           <p className="text-center text-gray-500 dark:text-gray-400">
             start following people to see their posts here
           </p>

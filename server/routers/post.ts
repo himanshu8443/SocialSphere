@@ -138,9 +138,17 @@ export const postRouter = router({
 
   // Get all posts by created date
   getPosts: partialAuthProcedure
-    .input(z.number().optional())
+    .input(
+      z
+        .object({
+          limit: z.number().optional(),
+          page: z.number().optional(),
+        })
+        .optional()
+    )
     .query(async ({ input, ctx }) => {
-      const limit = input || 999;
+      const limit = input?.limit || 999;
+      const page = input?.page || 1;
       // check if user is authenticated
       if (ctx.isAuthenticated) {
         const user = await ctx.db.user.findUnique({
@@ -158,6 +166,7 @@ export const postRouter = router({
 
       const posts = await ctx.db.post.findMany({
         take: limit,
+        skip: (page - 1) * limit,
         orderBy: {
           createdAt: "desc",
         },

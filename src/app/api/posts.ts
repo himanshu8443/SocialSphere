@@ -31,9 +31,15 @@ export async function createPost({
 }
 
 // get posts
-export async function getFeedPosts() {
+export async function getFeedPosts({
+  limit,
+  page,
+}: {
+  limit: number;
+  page: number;
+}) {
   try {
-    const result = await trpc.posts.getPosts.query();
+    const result = await trpc.posts.getPosts.query({ limit, page });
     return result;
   } catch (error: any) {
     console.log("error message", error?.data?.message);

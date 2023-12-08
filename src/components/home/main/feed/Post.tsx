@@ -61,7 +61,7 @@ const Post = ({
   return (
     <div
       key={post?.id}
-      className="dark:bg-gray-800 bg-gray-100 rounded-md px-2 py-4 max-h-[820px] max-w-[550px] "
+      className="dark:bg-gray-800 bg-gray-100 rounded-md px-2 py-4 max-h-[820px] w-[530px] "
     >
       <div className="flex justify-between items-center">
         <div className="flex space-x-2 justify-center items-center gap-2 ">

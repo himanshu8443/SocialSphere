@@ -3,7 +3,6 @@ import { trpc } from "../../trpc/trpc";
 export type UserIncludes =
   | "posts"
   | "comments"
-  | "friends"
   | "likedPosts"
   | "savedPosts"
   | "followers"

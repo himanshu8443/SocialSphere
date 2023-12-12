@@ -44,7 +44,7 @@ export async function getFeedPosts({
   } catch (error: any) {
     console.log("error message", error?.data?.message);
     console.log("error", error);
-    toast.error(error?.data?.message);
+    toast.error("Network Error");
     return error?.data?.message;
   }
 }

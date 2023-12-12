@@ -14,6 +14,7 @@ import { Dispatch } from "react";
 import { likeUnlikePost } from "@/app/api/posts";
 import { useState } from "react";
 import { followUser } from "@/app/api/friends";
+import { motion } from "framer-motion";
 
 const Post = ({
   post,
@@ -106,12 +107,13 @@ const Post = ({
         </p>
         {post?.type === "image" ? (
           <div className="flex justify-center items-center w-full h-full ">
-            <Image
+            <motion.img
               alt="Post"
               src={post?.src}
               height={500}
               width={550}
-              className="rounded-md h-auto max-h-[500px] object-contain w-auto max-w-[530px]"
+              className="rounded-md h-auto max-h-[500px] object-fill w-auto max-w-[530px]"
+              layoutId={`post-${post?.id}`}
             />
           </div>
         ) : post?.type === "video" ? (

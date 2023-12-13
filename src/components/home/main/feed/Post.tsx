@@ -73,9 +73,11 @@ const Post = ({
             height={40}
             className="rounded-full"
           />
-          <p className="text-gray-500 dark:text-gray-300 hover:underline cursor-pointer font-semibold text-lg">
-            {post?.User?.name}
-          </p>
+          <Link href={`/profile/${post?.User?.id}`} scroll={true}>
+            <p className="text-gray-500 dark:text-gray-300 hover:underline cursor-pointer font-semibold text-lg">
+              {post?.User?.name}
+            </p>
+          </Link>
           <p className="text-gray-500 dark:text-gray-400 font-semibold text-base">
             • {timeAgo(post?.createdAt)}
           </p>

@@ -9,6 +9,7 @@ import { setLogout } from "@/redux/slices/user";
 import { logout } from "@/app/api/auth";
 import { useAppDispatch } from "@/lib/hook";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import Link from "next/link";
 
 const Account = ({ user }: { user: UserState & PersistPartial }) => {
   const dispatch = useAppDispatch();
@@ -34,9 +35,11 @@ const Account = ({ user }: { user: UserState & PersistPartial }) => {
         <div className="absolute top-[105%] -right-full flex flex-col p-3 gap-1  w-40 bg-white dark:bg-gray-700 rounded-md overflow-hidden shadow-lg z-20">
           <button className="flex items-center px-4 py-3 bg-gray-600 rounded-md -mx-2 bg-opacity-70 hover:bg-opacity-100 active:bg-opacity-70">
             <AccountCircleOutlinedIcon className="h-5 w-5 mx-2 text-gray-600 dark:text-gray-200" />
-            <p className="text-gray-600 dark:text-gray-200 text-sm mx-2 font-medium">
-              Profile
-            </p>
+            <Link href={`/profile/${user.id}`}>
+              <p className="text-gray-600 dark:text-gray-200 text-sm mx-2 font-medium">
+                Profile
+              </p>
+            </Link>
           </button>
 
           <button

@@ -1,24 +1,37 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getUserDetails } from "@/app/api/user";
+import { getUserDetails, getUserDetailsById } from "@/app/api/user";
 import Image from "next/image";
 import Link from "next/link";
 import ActivePost from "@/components/home/main/feed/ActivePost";
+import { useAppSelector } from "@/lib/hook";
+import { motion } from "framer-motion";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import CommentIcon from "@mui/icons-material/Comment";
 
-export default function Profile() {
+export default function Profile({ params }: { params: { profileId: string } }) {
+  const loggedInUser = useAppSelector((state) => state.user);
   const [user, setUser] = useState<any>();
   useEffect(() => {
     let isMounted = true;
     const getUser = async () => {
-      const res = await getUserDetails(
-        "posts",
-        "savedPosts",
-        "followers",
-        "following"
-      );
-      if (res?.success && isMounted) {
-        setUser(res.data);
-        console.log(res.data);
+      if (loggedInUser?.id === params?.profileId) {
+        const res = await getUserDetails(
+          "posts",
+          "savedPosts",
+          "followers",
+          "following"
+        );
+        if (res?.success && isMounted) {
+          setUser(res.data);
+          console.log(res.data);
+        }
+      } else {
+        const res = await getUserDetailsById(params?.profileId);
+        if (res?.success && isMounted) {
+          setUser(res.data);
+          console.log(res.data);
+        }
       }
     };
     getUser();
@@ -61,35 +74,49 @@ export default function Profile() {
           {user?.posts?.map((post: any) => (
             <div
               key={post?.id}
-              className="relative w-[300px] h-[300px] rounded-md overflow-hidden"
+              className="relative w-[300px] h-[300px] rounded-md overflow-hidden cursor-pointer"
             >
+              {post?.type === "image" ? (
+                <Image
+                  src={post?.src}
+                  alt="Post"
+                  layout="fill"
+                  objectFit="cover"
+                />
+              ) : post?.type === "video" ? (
+                <video
+                  src={post?.src}
+                  className="w-full h-full object-cover"
+                  controls={false}
+                />
+              ) : (
+                <div className="flex justify-center items-center w-full h-full bg-gray-200 dark:bg-gray-700">
+                  <p className="text-gray-500 dark:text-gray-400 font-semibold text-lg text-center">
+                    {post?.title}
+                  </p>
+                </div>
+              )}
               <Link href={`?p=${post?.id}`} scroll={false}>
-                {post?.type === "image" ? (
-                  <Image
-                    src={post?.src}
-                    alt="Post"
-                    layout="fill"
-                    objectFit="cover"
-                  />
-                ) : post?.type === "video" ? (
-                  <video
-                    src={post?.src}
-                    className="w-full h-full object-cover"
-                    controls={false}
-                  />
-                ) : (
-                  <div className="flex justify-center items-center w-full h-full bg-gray-200 dark:bg-gray-700">
-                    <p className="text-gray-500 dark:text-gray-400 font-semibold text-lg text-center">
-                      {post?.title}
-                    </p>
+                <motion.div
+                  className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center gap-5"
+                  whileHover={{ opacity: 1 }}
+                  initial={{ opacity: 0 }}
+                >
+                  <div className="flex items-center gap-2 text-white">
+                    <FavoriteIcon />
+                    <p>{post?.likes}</p>
                   </div>
-                )}
+                  <div className="flex items-center gap-2 text-white">
+                    <CommentIcon />
+                    <p>{post?.Comment?.length}</p>
+                  </div>
+                </motion.div>
               </Link>
             </div>
           ))}
         </div>
       </div>
-      <ActivePost backRoute="/profile/kj" />
+      <ActivePost backRoute={`/profile/${params?.profileId}`} />
     </div>
   );
 }

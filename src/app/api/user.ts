@@ -18,3 +18,14 @@ export async function getUserDetails(...args: UserIncludes[]) {
     return error;
   }
 }
+
+export async function getUserDetailsById(id: string) {
+  try {
+    const result = await trpc.user.getUserDetailsById.query(id);
+    return result;
+  } catch (error: any) {
+    console.log("error message", error?.data?.message);
+    console.log("error", error);
+    return error;
+  }
+}

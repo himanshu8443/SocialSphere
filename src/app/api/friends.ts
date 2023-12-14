@@ -13,3 +13,15 @@ export async function followUser({ userId }: { userId: string }) {
     return error;
   }
 }
+
+export async function unfollowUser({ userId }: { userId: string }) {
+  try {
+    const result = await trpc.follow.unfollowUser.mutate({
+      userId,
+    });
+    toast.success("User unfollowed");
+    return result;
+  } catch (error: any) {
+    return error;
+  }
+}

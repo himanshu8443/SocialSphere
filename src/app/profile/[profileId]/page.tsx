@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { getUserDetails, getUserDetailsById } from "@/app/api/user";
+import { followUser, unfollowUser } from "@/app/api/friends";
 import Image from "next/image";
 import Link from "next/link";
 import ActivePost from "@/components/home/main/feed/ActivePost";
@@ -40,6 +41,46 @@ export default function Profile({ params }: { params: { profileId: string } }) {
     };
   }, []);
 
+  const startFollowing = async () => {
+    setUser((prev: any) => {
+      return {
+        ...prev,
+        followers: [...prev?.followers, loggedInUser],
+      };
+    });
+    const res = await followUser({ userId: user?.id });
+    if (!res?.success) {
+      setUser((prev: any) => {
+        return {
+          ...prev,
+          followers: prev?.followers?.filter(
+            (follower: any) => follower?.id !== loggedInUser?.id
+          ),
+        };
+      });
+    }
+  };
+
+  const stopFollowing = async () => {
+    setUser((prev: any) => {
+      return {
+        ...prev,
+        followers: prev?.followers?.filter(
+          (follower: any) => follower?.id !== loggedInUser?.id
+        ),
+      };
+    });
+    const res = await unfollowUser({ userId: user?.id });
+    if (!res?.success) {
+      setUser((prev: any) => {
+        return {
+          ...prev,
+          followers: [...prev?.followers, loggedInUser],
+        };
+      });
+    }
+  };
+
   return (
     <div className="mx-auto max-w-[1200px] min-h-screen mt-10 px-5">
       <div className="flex justify-between items-center gap-16 max-w-[600px] mx-auto">
@@ -51,7 +92,34 @@ export default function Profile({ params }: { params: { profileId: string } }) {
           className="rounded-full"
         />
         <div className="flex flex-col gap-4">
-          <h1 className="text-2xl font-bold">{user?.name}</h1>
+          <div className="flex gap-5 items-center justify-start">
+            <h1 className="text-2xl font-bold">{user?.name}</h1>
+            {user?.id !== loggedInUser?.id &&
+              (user?.followers?.find(
+                (follower: any) => follower?.id === loggedInUser?.id
+              ) ? (
+                <button
+                  className="bg-gray-200 dark:bg-gray-700 px-3 py-1 rounded-md text-gray-600 dark:text-gray-300"
+                  onClick={stopFollowing}
+                >
+                  Following
+                </button>
+              ) : (
+                <button
+                  className="bg-primary-700 px-3 py-1 rounded-md text-white"
+                  onClick={startFollowing}
+                >
+                  Follow
+                </button>
+              ))}
+            {user?.id === loggedInUser?.id && (
+              <Link href="/profile/edit">
+                <button className="bg-primary-700 px-3 py-1 rounded-md text-white">
+                  Edit
+                </button>
+              </Link>
+            )}
+          </div>
           <div className="flex space-x-5">
             <p className="text-gray-500 dark:text-gray-400">
               {user?.posts?.length} posts

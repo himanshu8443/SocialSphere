@@ -99,6 +99,7 @@ export const userRouter = router({
           message: "User not found",
         });
       }
+      user.password = "";
       return {
         success: true,
         message: "Successfully updated user details",

@@ -14,6 +14,7 @@ import EditProfile from "./EditProfile";
 export default function Profile({ params }: { params: { profileId: string } }) {
   const loggedInUser = useAppSelector((state) => state.user);
   const [user, setUser] = useState<any>();
+  const [editProfileModal, setEditProfileModal] = useState<boolean>(false);
   useEffect(() => {
     let isMounted = true;
     const getUser = async () => {
@@ -114,11 +115,12 @@ export default function Profile({ params }: { params: { profileId: string } }) {
                 </button>
               ))}
             {user?.id === loggedInUser?.id && (
-              <Link href="/profile/edit">
-                <button className="bg-primary-700 px-3 py-1 rounded-md text-white">
-                  Edit
-                </button>
-              </Link>
+              <button
+                className="bg-primary-700 px-3 py-1 rounded-md text-white"
+                onClick={() => setEditProfileModal(true)}
+              >
+                Edit
+              </button>
             )}
           </div>
           <div className="flex space-x-5">
@@ -186,7 +188,12 @@ export default function Profile({ params }: { params: { profileId: string } }) {
         </div>
       </div>
       <ActivePost backRoute={`/profile/${params?.profileId}`} />
-      <EditProfile user={user} setUser={setUser} />
+      <EditProfile
+        user={user}
+        setUser={setUser}
+        editProfileModal={editProfileModal}
+        setEditProfileModal={setEditProfileModal}
+      />
     </div>
   );
 }

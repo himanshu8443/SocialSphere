@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { trpc } from "../../trpc/trpc";
 
 export type UserIncludes =
@@ -45,6 +46,7 @@ export async function updateUserDetails({
       about,
       location,
     });
+    toast.success("Profile updated successfully");
     return result;
   } catch (error: any) {
     console.log("error message", error?.data?.message);

@@ -1,5 +1,10 @@
 import { TRPCError } from "@trpc/server";
-import { router, protectedProcedure, publicProcedure } from "../trpc/trpc";
+import {
+  router,
+  protectedProcedure,
+  publicProcedure,
+  partialAuthProcedure,
+} from "../trpc/trpc";
 import { z } from "zod";
 
 export const userRouter = router({
@@ -36,7 +41,7 @@ export const userRouter = router({
         data: user,
       };
     }),
-  getUserDetailsById: publicProcedure
+  getUserDetailsById: partialAuthProcedure
     .input(z.string())
     .query(async ({ ctx, input }) => {
       const user = await ctx.db.user.findUnique({
@@ -64,6 +69,39 @@ export const userRouter = router({
       return {
         success: true,
         message: "Successfully got user details",
+        data: user,
+      };
+    }),
+
+  // Update user
+  updateUserDetails: protectedProcedure
+    .input(
+      z.object({
+        name: z.string().optional(),
+        about: z.string().optional(),
+        location: z.string().optional(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const user = await ctx.db.user.update({
+        where: {
+          id: ctx.user.userId,
+        },
+        data: {
+          name: input.name,
+          about: input.about,
+          location: input.location,
+        },
+      });
+      if (!user) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "User not found",
+        });
+      }
+      return {
+        success: true,
+        message: "Successfully updated user details",
         data: user,
       };
     }),

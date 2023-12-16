@@ -29,3 +29,26 @@ export async function getUserDetailsById(id: string) {
     return error;
   }
 }
+
+export async function updateUserDetails({
+  name,
+  about,
+  location,
+}: {
+  name?: string;
+  about?: string;
+  location?: string;
+}) {
+  try {
+    const result = await trpc.user.updateUserDetails.mutate({
+      name,
+      about,
+      location,
+    });
+    return result;
+  } catch (error: any) {
+    console.log("error message", error?.data?.message);
+    console.log("error", error);
+    return error;
+  }
+}

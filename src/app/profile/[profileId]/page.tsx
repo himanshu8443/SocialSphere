@@ -9,6 +9,7 @@ import { useAppSelector } from "@/lib/hook";
 import { motion } from "framer-motion";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentIcon from "@mui/icons-material/Comment";
+import EditProfile from "./EditProfile";
 
 export default function Profile({ params }: { params: { profileId: string } }) {
   const loggedInUser = useAppSelector((state) => state.user);
@@ -185,6 +186,7 @@ export default function Profile({ params }: { params: { profileId: string } }) {
         </div>
       </div>
       <ActivePost backRoute={`/profile/${params?.profileId}`} />
+      <EditProfile user={user} setUser={setUser} />
     </div>
   );
 }

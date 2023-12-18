@@ -22,7 +22,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y nodejs npm
-          npm install -g typescript
 
       - name: Build and Test
         run: npm i && npm run build:server
@@ -36,5 +35,7 @@ jobs:
           script: |
             cd /home/ubuntu/api/ShareSphere
             git pull origin main
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
             npm install
             npm run build:server

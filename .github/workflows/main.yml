@@ -25,7 +25,7 @@ jobs:
           npm install -g typescript
 
       - name: Build and Test
-        run: npm run build:server
+        run: npm i && npm run build:server
 
       - name: Deploy to Server
         uses: appleboy/ssh-action@master

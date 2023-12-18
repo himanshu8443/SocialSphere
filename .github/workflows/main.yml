@@ -26,8 +26,7 @@ jobs:
       - name: Build and Test
         run: |
              npm install
-             DATABASE_URL=$TEST JWT_SECRET=$TEST
-             npm run build:server
+             DATABASE_URL=$TEST JWT_SECRET=$TEST npm run build:server
 
       - name: Deploy to Server
         uses: appleboy/ssh-action@master

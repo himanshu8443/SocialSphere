@@ -24,7 +24,9 @@ jobs:
           sudo apt-get install -y nodejs npm
 
       - name: Build and Test
-        run: npm i && npm run build:server
+        run: |
+             npm install
+             npm run build:server
 
       - name: Deploy to Server
         uses: appleboy/ssh-action@master

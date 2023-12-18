@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build:server": "cd server && rimraf dist && npx tsc",
+    "build:server": "cd server && node env.js && rimraf dist && npx tsc",
     "start:server": "node server/dist/index.js",
-    "predev:server": "cd server && rimraf dist && tsc",
+    "predev:server": "cd server && node env.js && rimraf dist && tsc",
     "dev:server": "cd server && concurrently \"npx tsc -w\" \"nodemon dist/index.js\"",
     "dev:client": "next dev",
     "build:client": "next build",
@@ -62,6 +62,6 @@
     "rimraf": "^5.0.5",
     "tailwindcss": "^3",
     "ts-node": "^10.9.1",
-    "typescript": "^5.3.3"
+    "typescript": "^5"
   }
 }

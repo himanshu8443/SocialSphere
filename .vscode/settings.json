@@ -4,6 +4,6 @@
   "editor.formatOnPaste": true,
   "terminal.integrated.fontSize": 17,
   "editor.wordWrap": "wordWrapColumn",
-  "editor.wordWrapColumn": 130,
+  "editor.wordWrapColumn": 110,
   "editor.fontSize": 18
 }

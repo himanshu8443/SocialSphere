@@ -10,14 +10,18 @@ import { motion } from "framer-motion";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentIcon from "@mui/icons-material/Comment";
 import EditProfile from "./EditProfile";
+import { useAppDispatch } from "@/lib/hook";
+import { setProgress } from "@/redux/slices/TopLoadingBar";
 
 export default function Profile({ params }: { params: { profileId: string } }) {
+  const dispatch = useAppDispatch();
   const loggedInUser = useAppSelector((state) => state.user);
   const [user, setUser] = useState<any>();
   const [editProfileModal, setEditProfileModal] = useState<boolean>(false);
   useEffect(() => {
     let isMounted = true;
     const getUser = async () => {
+      dispatch(setProgress(70));
       if (loggedInUser?.id === params?.profileId) {
         const res = await getUserDetails(
           "posts",
@@ -36,6 +40,7 @@ export default function Profile({ params }: { params: { profileId: string } }) {
           console.log(res.data);
         }
       }
+      dispatch(setProgress(100));
     };
     getUser();
     return () => {

@@ -4,6 +4,7 @@ import thunk from "redux-thunk";
 import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import { userSlice } from "./slices/user";
 import { activePost } from "./slices/ActivePost";
+import { topLoadingBar } from "./slices/TopLoadingBar";
 
 const createNoopStorage = () => {
   return {
@@ -35,6 +36,7 @@ export const store = configureStore({
   reducer: {
     user: userPersistedReducer,
     activePost: activePost.reducer,
+    topLoadingBar: topLoadingBar.reducer,
   },
   middleware: [thunk],
 });

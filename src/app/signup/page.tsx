@@ -4,8 +4,11 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import SignUpImg from "../../assets/signup.svg";
 import Image from "next/image";
 import { signUp } from "../api/auth";
+import { useAppDispatch } from "@/lib/hook";
+import { setProgress } from "@/redux/slices/TopLoadingBar";
 
 export default function Signup() {
+  const dispatch = useAppDispatch();
   type Inputs = {
     name: string;
     email: string;
@@ -19,8 +22,9 @@ export default function Signup() {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    console.log(data);
+    dispatch(setProgress(70));
     const res = await signUp(data);
+    dispatch(setProgress(100));
     if (res.success === true) {
       console.log("data", res?.data);
     }

@@ -8,6 +8,7 @@ import { useAppDispatch } from "@/lib/hook";
 import { setUser } from "@/redux/slices/user";
 import isAuth from "@/components/hoc/IsAuth";
 import { useRouter } from "next/navigation";
+import { setProgress } from "@/redux/slices/TopLoadingBar";
 
 const Login = () => {
   const router = useRouter();
@@ -23,7 +24,9 @@ const Login = () => {
   } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
+    dispatch(setProgress(70));
     const res = await login(data);
+    dispatch(setProgress(100));
     if (res.success === true) {
       dispatch(
         setUser({

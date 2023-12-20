@@ -62,7 +62,7 @@ const Post = ({
   return (
     <div
       key={post?.id}
-      className="dark:bg-gray-800 bg-gray-100 rounded-md px-2 py-4 max-h-[820px] w-[530px] "
+      className="dark:bg-gray-800 bg-gray-100 rounded-md px-2 py-4 max-h-[820px] md:w-[530px] min-w-[300px] w-full"
     >
       <div className="flex justify-between items-center">
         <div className="flex space-x-2 justify-center items-center gap-2 ">
@@ -114,7 +114,7 @@ const Post = ({
               src={post?.src}
               height={500}
               width={550}
-              className="rounded-md h-auto max-h-[500px] object-fill w-auto max-w-[530px]"
+              className="rounded-md h-auto max-h-[500px] object-fill w-auto md:max-w-[530px] max-w-[300px]"
               layoutId={`post-${post?.id}`}
             />
           </div>

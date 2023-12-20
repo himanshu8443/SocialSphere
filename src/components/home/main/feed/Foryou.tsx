@@ -41,7 +41,7 @@ const Foryou = () => {
   });
 
   return (
-    <div className="flex flex-col justify-center items-center gap-8 w-[540px] min-h-screen">
+    <div className="flex flex-col justify-center items-center gap-8 md:w-[540px] min-h-screen">
       {posts.map((post) => (
         <Post key={post?.id} post={post} posts={posts} setPosts={setPosts} />
       ))}

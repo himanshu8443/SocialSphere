@@ -66,7 +66,7 @@ const Modal = ({ post, setPost }: { post: Post; setPost: Dispatch<Post> }) => {
         <div className="flex flex-col space-x-2">
           {post.type === "text" ? (
             <textarea
-              className={`w-full dark:bg-slate-700 bg-gray-100 p-2 rounded-md resize-none outline-none min-h-[400px] min-w-[700px] 
+              className={`w-full dark:bg-slate-700 bg-gray-100 p-2 rounded-md resize-none outline-none md:min-h-[400px] md:min-w-[700px] min-h-[200px] min-w-[300px]
               ${errors.content ? "placeholder:text-red-500" : ""}`}
               autoFocus={true}
               placeholder={
@@ -79,7 +79,7 @@ const Modal = ({ post, setPost }: { post: Post; setPost: Dispatch<Post> }) => {
           ) : (
             <input
               type="text"
-              className={` w-full dark:bg-slate-700 bg-gray-100 p-2 rounded-md resize-none outline-none  min-w-[700px] ${
+              className={` w-full dark:bg-slate-700 bg-gray-100 p-2 rounded-md resize-none outline-none md:min-w-[700px] ${
                 errors.content ? "placeholder:text-red-500" : ""
               }`}
               autoFocus={true}
@@ -94,7 +94,7 @@ const Modal = ({ post, setPost }: { post: Post; setPost: Dispatch<Post> }) => {
             <Upload Type="Video" post={post} setPost={setPost} />
           ) : null}
 
-          <div className="flex justify-between space-y-2 mt-2">
+          <div className="flex justify-between  mt-2">
             <div className="flex space-x-2">
               <button
                 className="flex space-x-2 hover:bg-gray-200 dark:hover:bg-slate-600 rounded-md p-2"
@@ -121,7 +121,7 @@ const Modal = ({ post, setPost }: { post: Post; setPost: Dispatch<Post> }) => {
               )}
             </div>
             <button
-              className="flex justify-center text-lg gap-3 items-center rounded-full py-1 px-3 border-[1px] shadow-sm shadow-gray-300 dark:shadow-gray-700 dark:border-gray-700 border-gray-200 bg-gray-100 hover:dark:bg-gray-700 dark:bg-gray-800 hover:bg-gray-200 active:bg-gray-100 dark:active:bg-gray-800"
+              className="flex justify-center text-sm md:text-lg gap-3 items-center rounded-full py-1 px-3 border-[1px] shadow-sm shadow-gray-300 dark:shadow-gray-700 dark:border-gray-700 border-gray-200 bg-gray-100 hover:dark:bg-gray-700 dark:bg-gray-800 hover:bg-gray-200 active:bg-gray-100 dark:active:bg-gray-800"
               onClick={handleSubmit(onSubmit)}
             >
               Post

@@ -19,15 +19,15 @@ const CreatePost = () => {
   });
 
   return (
-    <div className="dark:bg-gray-800 bg-gray-100 p-3 rounded-md   ">
+    <div className="dark:bg-gray-800 bg-gray-100 p-3 rounded-md max-sm:w-[380px]">
       <button
-        className="rounded-full text-left text-xl w-[500px] bg-gray-300 text-gray-600 dark:text-gray-100 dark:bg-slate-700 p-2 hover:dark:bg-slate-600 hover:bg-gray-200 "
+        className="rounded-full text-left md:text-xl text-base w-[300px] md:w-[500px] bg-gray-300 text-gray-600 dark:text-gray-100 dark:bg-slate-700 p-2 hover:dark:bg-slate-600 hover:bg-gray-200 "
         onClick={() => setPost({ active: true, type: "text" })}
       >
         What's on your mind?
       </button>
       <div className="flex justify-between items-center mt-4">
-        <div className="flex space-x-2 gap-8">
+        <div className="flex md:gap-8 gap-0">
           <button
             className="flex space-x-2 hover:dark:bg-slate-700  hover:bg-slate-200 rounded-md p-3"
             onClick={() => setPost({ active: true, type: "image", url: null })}

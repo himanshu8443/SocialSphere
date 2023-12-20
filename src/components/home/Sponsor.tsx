@@ -4,7 +4,7 @@ import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 const Sponsor = () => {
   return (
-    <div className=" h-[310px] w-[310px] relative">
+    <div className=" h-[310px] w-[310px] relative hidden md:block">
       <div className="dark:bg-gray-800 bg-gray-100  rounded-md p-3 h-fit flex flex-col justify-between gap-2 ">
         <div className="flex justify-between items-center cursor-pointer">
           <p className="text-gray-500 dark:text-gray-400 font-semibold">

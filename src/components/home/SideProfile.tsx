@@ -54,7 +54,7 @@ const SideProfile = () => {
       : window.btoa(str);
 
   return (
-    <div className="flex justify-between items-start dark:bg-gray-800 bg-gray-100 rounded-md shadow-md p-2 w-[330px] h-fit ">
+    <div className="md:flex justify-between items-start dark:bg-gray-800 bg-gray-100 rounded-md shadow-md p-2 hidden md:w-[330px] h-fit ">
       <div>
         <div className="flex justify-center gap-4 items-center">
           <Image

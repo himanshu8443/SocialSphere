@@ -11,11 +11,7 @@ const app = express();
 app.use(cookieParser());
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "https://share-sphere.vercel.app",
-      "https://60mvwfcc-3000.inc1.devtunnels.ms",
-    ],
+    origin: ["http://localhost:3000", "socialspherex.vercel.app"],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
   })

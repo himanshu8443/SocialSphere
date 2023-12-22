@@ -42,7 +42,7 @@ const VideoPlayer = ({ src }: { src: string }) => {
       disablePictureInPicture={true}
       controlsList="nodownload noplaybackrate"
       src={src}
-      className=" aspect-auto max-h-[600px] object-cover w-[600px] max-w-[530px]"
+      className=" aspect-auto max-h-[600px] object-cover md:w-[600px] md:max-w-[530px]"
       controls
     ></video>
   );

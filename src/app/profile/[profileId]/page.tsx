@@ -90,13 +90,13 @@ export default function Profile({ params }: { params: { profileId: string } }) {
 
   return (
     <div className="mx-auto max-w-[1200px] min-h-screen mt-10 px-5">
-      <div className="flex justify-between items-center gap-16 max-w-[600px] mx-auto">
+      <div className="flex justify-between items-center md:gap-16 max-w-[600px] mx-auto">
         <Image
           src={user?.profileImage}
           width={150}
           height={150}
           alt="Profile"
-          className="rounded-full"
+          className="rounded-full md:w-[150px] md:h-[150px] w-[100px] h-[100px]"
         />
         <div className="flex flex-col gap-4">
           <div className="flex gap-5 items-center justify-start">
@@ -129,7 +129,7 @@ export default function Profile({ params }: { params: { profileId: string } }) {
             )}
           </div>
           <div className="flex space-x-5">
-            <p className="text-gray-500 dark:text-gray-400">
+            <p className="text-gray-500 dark:text-gray-400 hidden md:block">
               {user?.posts?.length} posts
             </p>
             <p className="text-gray-500 dark:text-gray-400">
@@ -145,51 +145,53 @@ export default function Profile({ params }: { params: { profileId: string } }) {
         </div>
       </div>
       <hr className="my-5 dark:border-gray-700 border-gray-300" />
-      <div className="flex flex-col gap-5 items-center justify-center">
-        <div className="flex flex-wrap gap-5 justify-center items-center">
-          {user?.posts?.map((post: any) => (
-            <div
-              key={post?.id}
-              className="relative w-[300px] h-[300px] rounded-md overflow-hidden cursor-pointer"
-            >
-              {post?.type === "image" ? (
-                <Image
-                  src={post?.src}
-                  alt="Post"
-                  layout="fill"
-                  objectFit="cover"
-                />
-              ) : post?.type === "video" ? (
-                <video
-                  src={post?.src}
-                  className="w-full h-full object-cover"
-                  controls={false}
-                />
-              ) : (
-                <div className="flex justify-center items-center w-full h-full bg-gray-200 dark:bg-gray-700">
-                  <p className="text-gray-500 dark:text-gray-400 font-semibold text-lg text-center">
-                    {post?.title}
-                  </p>
-                </div>
-              )}
-              <Link href={`?p=${post?.id}`} scroll={false}>
-                <motion.div
-                  className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center gap-5"
-                  whileHover={{ opacity: 1 }}
-                  initial={{ opacity: 0 }}
-                >
-                  <div className="flex items-center gap-2 text-white">
-                    <FavoriteIcon />
-                    <p>{post?.likes}</p>
+      <div className="flex flex-col md:gap-5 items-center justify-center">
+        <div className="w-full mx-auto">
+          <div className="flex flex-wrap md:gap-5 gap-1 md:justify-center  items-center">
+            {user?.posts?.map((post: any) => (
+              <div
+                key={post?.id}
+                className="relative md:w-[300px] md:h-[300px] h-[120px] w-[120px] rounded-md overflow-hidden cursor-pointer"
+              >
+                {post?.type === "image" ? (
+                  <Image
+                    src={post?.src}
+                    alt="Post"
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                ) : post?.type === "video" ? (
+                  <video
+                    src={post?.src}
+                    className="w-full h-full object-cover"
+                    controls={false}
+                  />
+                ) : (
+                  <div className="flex justify-center items-center w-full h-full bg-gray-200 dark:bg-gray-700">
+                    <p className="text-gray-500 dark:text-gray-400 font-semibold text-xs md:text-lg text-center">
+                      {post?.title}
+                    </p>
                   </div>
-                  <div className="flex items-center gap-2 text-white">
-                    <CommentIcon />
-                    <p>{post?.Comment?.length}</p>
-                  </div>
-                </motion.div>
-              </Link>
-            </div>
-          ))}
+                )}
+                <Link href={`?p=${post?.id}`} scroll={false}>
+                  <motion.div
+                    className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center gap-5"
+                    whileHover={{ opacity: 1 }}
+                    initial={{ opacity: 0 }}
+                  >
+                    <div className="flex items-center gap-2 text-white">
+                      <FavoriteIcon />
+                      <p>{post?.likes}</p>
+                    </div>
+                    <div className="flex items-center gap-2 text-white">
+                      <CommentIcon />
+                      <p>{post?.Comment?.length}</p>
+                    </div>
+                  </motion.div>
+                </Link>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       <ActivePost backRoute={`/profile/${params?.profileId}`} />

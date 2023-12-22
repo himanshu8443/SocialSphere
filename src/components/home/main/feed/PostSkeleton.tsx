@@ -5,7 +5,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 const PostSkeleton = () => {
   return (
-    <div className="dark:bg-gray-800 bg-gray-100 rounded-md px-2 py-4 max-h-[820px] w-[530px] ">
+    <div className="dark:bg-gray-800 bg-gray-100 rounded-md px-2 py-4 max-h-[820px] md:w-[530px] min-w-[300px] max-sm:max-w-[370px] w-full">
       <div className="animate-pulse">
         <div className="flex justify-between items-center">
           <div className="flex space-x-2 justify-center items-center gap-2 ">
@@ -21,7 +21,7 @@ const PostSkeleton = () => {
             <p className="text-gray-500 dark:text-gray-300 hover:underline cursor-pointer font-semibold text-lg">
               <div className="h-4 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"></div>
             </p>
-            <p className="text-gray-500 dark:text-gray-400 font-semibold text-base flex ">
+            <p className="text-gray-500 dark:text-gray-400 font-semibold text-base md:flex hidden ">
               <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"></div>
             </p>
           </div>
@@ -39,7 +39,7 @@ const PostSkeleton = () => {
         </div>
         <div className="flex flex-col gap-3 mt-3">
           <div className="flex justify-center items-center w-full h-full ">
-            <div className="flex items-center justify-center h-[400px] w-[500px] bg-gray-300 rounded dark:bg-gray-700">
+            <div className="flex items-center justify-center w-full h-[300px] md:h-[500px] bg-gray-300 rounded dark:bg-gray-700">
               <svg
                 className="w-full h-10 text-gray-200 dark:text-gray-600"
                 aria-hidden="true"

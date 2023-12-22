@@ -108,7 +108,7 @@ const Post = ({
           {post?.title}
         </p>
         {post?.type === "image" ? (
-          <div className="flex justify-center items-center w-full h-full ">
+          <div className="flex justify-center items-center w-full h-full min-h-[300px] ">
             <motion.img
               alt="Post"
               src={post?.src}

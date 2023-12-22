@@ -90,7 +90,7 @@ const ActivePost = ({ backRoute }: { backRoute?: string }) => {
           }}
         >
           <div className="flex  relative" onClick={(e) => e.stopPropagation()}>
-            <div className="flex flex-col dark:bg-gray-800 bg-gray-100  min-h-[500px] min-w-[400px]  rounded-l-md">
+            <div className="md:flex flex-col dark:bg-gray-800 bg-gray-100  min-h-[500px] min-w-[400px]  rounded-l-md hidden">
               {post?.type === "text" && (
                 <p
                   className={`text-gray-600 dark:text-gray-300 overflow-y-auto max-h-[600px] p-2 min-h-[43px] max-w-[500px] flex items-center text-justify px-2 ${

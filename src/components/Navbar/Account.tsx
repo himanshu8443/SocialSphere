@@ -33,7 +33,7 @@ const Account = ({ user }: { user: UserState & PersistPartial }) => {
         </button>
       )}
       {showMenu && user.auth && (
-        <div className="absolute top-[105%] -right-full flex flex-col p-3 gap-1  w-40 bg-white dark:bg-gray-700 rounded-md overflow-hidden shadow-lg z-20">
+        <div className="absolute top-[105%] -right-0 flex flex-col p-3 gap-1  w-40 bg-white dark:bg-gray-700 rounded-md overflow-hidden shadow-lg z-20">
           <button
             className="flex items-center px-4 py-3 bg-gray-300 dark:bg-gray-600 rounded-md -mx-2 bg-opacity-70 dark:bg-opacity-70 hover:bg-opacity-100 dark:hover:bg-opacity-100 active:bg-opacity-70 dark:active:bg-opacity-70"
             onClick={() => {
@@ -55,7 +55,7 @@ const Account = ({ user }: { user: UserState & PersistPartial }) => {
               const res = await logout();
               dispatch(setProgress(100));
               setShowMenu(false);
-              if (res.success) {
+              if (res?.success) {
                 dispatch(setLogout());
               }
             }}

@@ -12,29 +12,35 @@ import CommentIcon from "@mui/icons-material/Comment";
 import EditProfile from "./EditProfile";
 import { useAppDispatch } from "@/lib/hook";
 import { setProgress } from "@/redux/slices/TopLoadingBar";
+import ProfileSkeleton from "./ProfileSkeleton";
 
 export default function Profile({ params }: { params: { profileId: string } }) {
   const dispatch = useAppDispatch();
   const loggedInUser = useAppSelector((state) => state.user);
   const [user, setUser] = useState<any>();
   const [editProfileModal, setEditProfileModal] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
     let isMounted = true;
     const getUser = async () => {
       dispatch(setProgress(70));
       if (loggedInUser?.id === params?.profileId) {
+        setLoading(true);
         const res = await getUserDetails(
           "posts",
           "savedPosts",
           "followers",
           "following"
         );
+        setLoading(false);
         if (res?.success && isMounted) {
           setUser(res.data);
           console.log(res.data);
         }
       } else {
+        setLoading(true);
         const res = await getUserDetailsById(params?.profileId);
+        setLoading(false);
         if (res?.success && isMounted) {
           setUser(res.data);
           console.log(res.data);
@@ -88,7 +94,9 @@ export default function Profile({ params }: { params: { profileId: string } }) {
     }
   };
 
-  return (
+  return loading ? (
+    <ProfileSkeleton />
+  ) : (
     <div className="mx-auto max-w-[1200px] min-h-screen mt-10 px-5">
       <div className="flex justify-between items-center md:gap-16 max-w-[600px] mx-auto">
         <Image

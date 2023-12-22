@@ -11,7 +11,7 @@ const Actions = () => {
 
   const isLogged = user.auth;
   return (
-    <div className="flex items-center md:gap-7 gap-2 flex-row-reverse md:flex-row">
+    <div className="flex items-center md:gap-7 gap-2 flex-row">
       {!isLogged ? (
         <div className="flex items-center gap-5">
           <Link href="/signup">

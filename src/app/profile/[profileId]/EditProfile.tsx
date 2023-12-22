@@ -75,7 +75,7 @@ const EditProfile = ({
               <img
                 src={user?.profileImage}
                 alt="avatar"
-                className="w-40 h-40 rounded-full"
+                className="md:w-40 md:h-40 h-24 w-24 rounded-full"
               />
               <div className="flex flex-col gap-3 ml-5">
                 <div className="flex gap-2 flex-col">

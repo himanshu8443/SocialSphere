@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Foryou from "./Foryou";
-import ActivePost from "./ActivePost";
+import ActivePost from "../ActivePost";
 import Following from "./Folllowing";
 
 const Feed = () => {

@@ -2,8 +2,8 @@
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getPostById } from "@/app/api/posts";
-import VideoPlayer from "./VideoPlayer";
-import { timeAgo } from "./Post";
+import VideoPlayer from "./feed/VideoPlayer";
+import { timeAgo } from "./feed/Post";
 import { createComment, deleteComment } from "@/app/api/comments";
 import SendIcon from "@mui/icons-material/Send";
 import { getComments } from "@/app/api/comments";
@@ -12,6 +12,9 @@ import { useRouter } from "next/navigation";
 import { useAppSelector } from "@/lib/hook";
 import { motion } from "framer-motion";
 import { AnimatePresence } from "framer-motion";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { likeUnlikePost } from "@/app/api/posts";
 
 const ActivePost = ({ backRoute }: { backRoute?: string }) => {
   const params = useSearchParams().get("p");
@@ -22,6 +25,7 @@ const ActivePost = ({ backRoute }: { backRoute?: string }) => {
   const [loading, setLoading] = useState(false);
   const [comments, setComments] = useState<any[]>([]);
   const postData = useAppSelector((state) => state.activePost);
+  const [isLiked, setIsLiked] = useState(false);
 
   useEffect(() => {
     let mounted = true;
@@ -33,9 +37,11 @@ const ActivePost = ({ backRoute }: { backRoute?: string }) => {
           const res = await getPostById(params);
           if (res?.success && mounted) {
             setPost(res.data);
+            setIsLiked(res.data?.likedBy?.length > 0);
           }
         } else {
           setPost(postData?.post);
+          setIsLiked(postData?.post?.likedBy?.length > 0);
         }
 
         // get comments
@@ -77,11 +83,21 @@ const ActivePost = ({ backRoute }: { backRoute?: string }) => {
     }
   };
 
+  const likeUnlike = async () => {
+    if (!post) return;
+    setIsLiked(!isLiked);
+    const res = await likeUnlikePost(post?.id);
+    console.log(res);
+    if (!res?.success) {
+      setIsLiked(!isLiked);
+    }
+  };
+
   return (
     params && (
       <AnimatePresence mode="wait">
         <motion.div
-          className="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+          className="fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 flex justify-center items-center z-50 "
           onClick={() => {
             router.replace(backRoute || "/", {
               scroll: false,
@@ -89,8 +105,11 @@ const ActivePost = ({ backRoute }: { backRoute?: string }) => {
             setPost(null);
           }}
         >
-          <div className="flex  relative" onClick={(e) => e.stopPropagation()}>
-            <div className="md:flex flex-col dark:bg-gray-800 bg-gray-100  min-h-[500px] min-w-[400px]  rounded-l-md hidden">
+          <div
+            className="flex max-sm:flex-col relative"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex flex-col dark:bg-gray-800 bg-gray-100  md:min-h-[500px] min-w-[400px]  rounded-l-md">
               {post?.type === "text" && (
                 <p
                   className={`text-gray-600 dark:text-gray-300 overflow-y-auto max-h-[600px] p-2 min-h-[43px] max-w-[500px] flex items-center text-justify px-2 ${
@@ -107,7 +126,7 @@ const ActivePost = ({ backRoute }: { backRoute?: string }) => {
                     src={post?.src}
                     height={700}
                     width={850}
-                    className=" h-auto max-h-[600px] object-contain w-auto max-w-[700px]"
+                    className=" h-auto max-h-[500px] md:max-h-[600px] object-contain w-auto max-w-[300px] md:max-w-[700px]"
                     layoutId={`post-${post?.id}`}
                     transition={{ duration: 0.3 }}
                   />
@@ -125,7 +144,7 @@ const ActivePost = ({ backRoute }: { backRoute?: string }) => {
               exit={{ x: 100 }}
               transition={{ duration: 0.2 }}
             >
-              <div className="flex space-x-2 justify-start items-center gap-2 p-2 w-[300px] dark:bg-gray-700 bg-gray-200 rounded-tr-md rounded-b-md">
+              <div className="flex space-x-2 justify-start items-center gap-2 p-2 md:w-[300px] dark:bg-gray-700 bg-gray-200 rounded-tr-md rounded-b-md">
                 <img
                   alt="Profile"
                   src={post?.User?.profileImage}
@@ -140,7 +159,7 @@ const ActivePost = ({ backRoute }: { backRoute?: string }) => {
                   • {timeAgo(post?.createdAt)}
                 </p>
               </div>
-              <div className="dark:bg-gray-800 bg-gray-100  p-2 w-[300px] flex flex-col">
+              <div className="dark:bg-gray-800 bg-gray-100  p-2 md:w-[300px] flex flex-col">
                 {post?.type !== "text" && (
                   <p
                     className={`text-gray-600 dark:text-gray-300 overflow-y-auto max-h-[600px] p-2 min-h-[43px] max-w-[500px] flex items-center text-justify px-2 ${
@@ -150,7 +169,7 @@ const ActivePost = ({ backRoute }: { backRoute?: string }) => {
                     {post?.title}
                   </p>
                 )}
-                <div className="h-[400px]  overflow-y-scroll">
+                <div className="md:h-[400px] h-[300px]  overflow-y-scroll">
                   {loading && (
                     <div className="flex justify-center items-center h-full">
                       <span className="small-loader border-gray-500 dark:border-gray-200 border-b-transparent dark:border-b-transparent border-4"></span>
@@ -170,7 +189,25 @@ const ActivePost = ({ backRoute }: { backRoute?: string }) => {
                   ))}
                 </div>
               </div>
-              <div className="flex absolute bottom-0 justify-center items-center gap-2 dark:bg-gray-800 bg-gray-100 rounded-md  p-2 w-[300px] border-t dark:border-gray-500 border-gray-300">
+              <div className="flex md:absolute bottom-[55px] justify-start items-center gap-3 dark:bg-gray-800 bg-gray-100  p-2 w-full md:w-[300px] border-t dark:border-gray-500 border-gray-300 fixed right-0 ">
+                <button className="" onClick={likeUnlike}>
+                  {isLiked ? (
+                    <FavoriteIcon
+                      style={{ fontSize: 28 }}
+                      className="text-primary-500 scale-125"
+                    />
+                  ) : (
+                    <FavoriteBorderIcon
+                      style={{ fontSize: 28 }}
+                      className="dark:text-gray-300 hover:text-primary-500 dark:hover:text-primary-500 text-gray-500 scale-125"
+                    />
+                  )}
+                </button>
+                <p className="text-gray-500 dark:text-gray-300 font-semibold text-base">
+                  {post?.likes} {post?.likes > 1 ? "likes" : "like"}
+                </p>
+              </div>
+              <div className="flex md:absolute bottom-0 justify-center items-center gap-2 dark:bg-gray-800 bg-gray-100 rounded-md  p-2 w-full md:w-[300px] border-t dark:border-gray-500 border-gray-300 fixed right-0">
                 <img
                   alt="Profile"
                   src={post?.User?.profileImage}

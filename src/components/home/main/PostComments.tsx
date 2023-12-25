@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { timeAgo } from "./Post";
+import { timeAgo } from "./feed/Post";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useAppSelector } from "@/lib/hook";
 

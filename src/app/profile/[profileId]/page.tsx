@@ -4,7 +4,7 @@ import { getUserDetails, getUserDetailsById } from "@/app/api/user";
 import { followUser, unfollowUser } from "@/app/api/friends";
 import Image from "next/image";
 import Link from "next/link";
-import ActivePost from "@/components/home/main/feed/ActivePost";
+import ActivePost from "@/components/home/main/ActivePost";
 import { useAppSelector } from "@/lib/hook";
 import { motion } from "framer-motion";
 import FavoriteIcon from "@mui/icons-material/Favorite";

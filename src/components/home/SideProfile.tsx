@@ -9,6 +9,7 @@ import VerifiedIcon from "@mui/icons-material/Verified";
 import { useAppSelector, useAppDispatch } from "@/lib/hook";
 import { setUser } from "@/redux/slices/user";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import { toBase64, shimmer } from "@/lib/imagePlaceholder";
 
 const SideProfile = () => {
   const dispatch = useAppDispatch();
@@ -35,29 +36,12 @@ const SideProfile = () => {
   }, []);
 
   // Placeholder
-  const shimmer = (w: number, h: number) => `
-<svg width="${w}" height="${h}" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <defs>
-    <linearGradient id="g">
-      <stop stop-color="#1A1A1A" offset="20%" />
-      <stop stop-color="#333333" offset="50%" />
-      <stop stop-color="#1A1A1A" offset="70%" />
-    </linearGradient>
-  </defs>
-  <rect width="${w}" height="${h}" fill="#1A1A1A" />
-  <rect id="r" width="${w}" height="${h}" fill="url(#g)" />
-  <animate xlink:href="#r" attributeName="x" from="-${w}" to="${w}" dur="1s" repeatCount="indefinite"  />
-</svg>`;
-  const toBase64 = (str: string) =>
-    typeof window === "undefined"
-      ? Buffer.from(str).toString("base64")
-      : window.btoa(str);
 
   return (
     <div className="md:flex justify-between items-start dark:bg-gray-800 bg-gray-100 rounded-md shadow-md p-2 hidden md:w-[330px] h-fit ">
       <div>
         <div className="flex justify-center gap-4 items-center">
-          <Image
+          <img
             placeholder={`data:image/svg+xml;base64,${toBase64(
               shimmer(700, 475)
             )}`}

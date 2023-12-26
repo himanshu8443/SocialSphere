@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { Dispatch } from "react";
 import Image from "next/image";
 import { Post } from "./CreatePost";
+import { toBase64, shimmer } from "@/lib/imagePlaceholder";
 
 export default function Upload({
   Type,
@@ -33,13 +34,21 @@ export default function Upload({
           }}
         />
       ) : Type === "Image" ? (
-        <div className="flex justify-center items-center mt-2">
+        <div className="flex justify-center items-center mt-2 min-h-[200px]">
           <Image
+            placeholder={`data:image/svg+xml;base64,${toBase64(
+              shimmer(700, 475)
+            )}`}
             src={post.url as string}
             width={400}
             height={400}
             alt="Img"
             className="md:max-w-full md:w-auto object-cover"
+            onError={(e) => {
+              e.currentTarget.src = `data:image/svg+xml;base64,${toBase64(
+                shimmer(700, 475)
+              )}`;
+            }}
           />
         </div>
       ) : (

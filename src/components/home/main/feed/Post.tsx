@@ -114,7 +114,7 @@ const Post = ({
               src={post?.src}
               height={500}
               width={550}
-              className="rounded-md h-auto max-h-[500px] object-fill w-auto md:max-w-[530px] max-w-[300px]"
+              className="rounded-md h-auto max-h-[500px] object-fill w-auto md:max-w-[520px] max-w-[300px]"
               layoutId={`post-${post?.id}`}
             />
           </div>

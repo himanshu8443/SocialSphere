@@ -5,6 +5,7 @@ import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 import { userSlice } from "./slices/user";
 import { activePost } from "./slices/ActivePost";
 import { topLoadingBar } from "./slices/TopLoadingBar";
+import { modalsSlice } from "./slices/modals";
 
 const createNoopStorage = () => {
   return {
@@ -37,6 +38,7 @@ export const store = configureStore({
     user: userPersistedReducer,
     activePost: activePost.reducer,
     topLoadingBar: topLoadingBar.reducer,
+    modals: modalsSlice.reducer,
   },
   middleware: [thunk],
 });

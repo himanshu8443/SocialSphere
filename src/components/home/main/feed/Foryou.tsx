@@ -19,7 +19,7 @@ const Foryou = () => {
       setLoading(false);
       if (res?.success && res.data?.length > 0) {
         setPosts(page === 1 ? [...res.data] : [...posts, ...res.data]);
-        console.log("posts", res.data);
+        // console.log("posts", res.data);
       } else {
         setLastPage(true);
       }

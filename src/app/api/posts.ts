@@ -77,9 +77,15 @@ export async function getPostById(postId: string) {
 }
 
 // get posts of user following
-export async function getPostsOfUserFollowing() {
+export async function getPostsOfUserFollowing({
+  limit,
+  page,
+}: {
+  limit: number;
+  page: number;
+}) {
   try {
-    const result = await trpc.posts.getFollowingPosts.query();
+    const result = await trpc.posts.getFollowingPosts.query({ limit, page });
     return result;
   } catch (error: any) {
     console.log("error message", error?.data?.message);

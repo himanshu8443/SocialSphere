@@ -373,9 +373,17 @@ export const postRouter = router({
 
   // Get posts of users that the current user follows
   getFollowingPosts: protectedProcedure
-    .input(z.number().optional())
+    .input(
+      z
+        .object({
+          limit: z.number().optional(),
+          page: z.number().optional(),
+        })
+        .optional()
+    )
     .query(async ({ ctx, input }) => {
-      const limit = input || 999;
+      const limit = input?.limit || 999;
+      const page = input?.page || 1;
       const followingList = await ctx.db.user.findUnique({
         where: {
           id: ctx.user.userId,
@@ -393,6 +401,7 @@ export const postRouter = router({
 
       const posts = await ctx.db.post.findMany({
         take: limit,
+        skip: (page - 1) * limit,
         orderBy: {
           createdAt: "desc",
         },

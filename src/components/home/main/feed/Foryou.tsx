@@ -4,7 +4,6 @@ import { getFeedPosts } from "@/app/api/posts";
 import Post from "./Post";
 import PostSkeleton from "./PostSkeleton";
 import { useAppDispatch } from "@/lib/hook";
-import { setProgress } from "@/redux/slices/TopLoadingBar";
 
 const Foryou = () => {
   const dispatch = useAppDispatch();
@@ -30,7 +29,7 @@ const Foryou = () => {
 
   const handleScroll = () => {
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
-    if (scrollTop + clientHeight >= scrollHeight - 1) {
+    if (scrollTop + clientHeight >= scrollHeight - 3) {
       setPage((prev) => prev + 1);
     }
   };

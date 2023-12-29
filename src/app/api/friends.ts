@@ -25,3 +25,36 @@ export async function unfollowUser({ userId }: { userId: string }) {
     return error;
   }
 }
+
+// get following
+export async function getFollowing() {
+  try {
+    const result = await trpc.follow.getFollowing.query();
+    return result;
+  } catch (error: any) {
+    return error;
+  }
+}
+
+// unfollow user by id
+export async function unfollowUserById(userId: string) {
+  try {
+    const result = await trpc.follow.unfollowUser.mutate({
+      userId,
+    });
+    toast.success("User unfollowed");
+    return result;
+  } catch (error: any) {
+    return error;
+  }
+}
+
+// get followers list
+export async function getFollowers() {
+  try {
+    const result = await trpc.follow.getFollowers.query();
+    return result;
+  } catch (error: any) {
+    return error;
+  }
+}

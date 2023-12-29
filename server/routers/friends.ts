@@ -41,6 +41,7 @@ export const followRouter = router({
       return { success: true };
     }),
 
+  // unfollow user
   unfollowUser: protectedProcedure
     .input(z.object({ userId: z.string() }))
     .mutation(async ({ input, ctx }) => {
@@ -80,4 +81,62 @@ export const followRouter = router({
 
       return { success: true };
     }),
+
+  // get list of following
+  getFollowing: protectedProcedure.query(async ({ ctx }) => {
+    const { db } = ctx;
+    const following = await db.user.findUnique({
+      where: { id: ctx.user.userId },
+      include: {
+        following: {
+          select: {
+            id: true,
+            name: true,
+            profileImage: true,
+            emailVerified: true,
+          },
+        },
+      },
+    });
+
+    if (!following) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "User not found",
+      });
+    }
+    return {
+      success: true,
+      data: following.following,
+    };
+  }),
+
+  //get followers list
+  getFollowers: protectedProcedure.query(async ({ ctx }) => {
+    const { db } = ctx;
+    const followers = await db.user.findUnique({
+      where: { id: ctx.user.userId },
+      include: {
+        followers: {
+          select: {
+            id: true,
+            name: true,
+            profileImage: true,
+            emailVerified: true,
+          },
+        },
+      },
+    });
+
+    if (!followers) {
+      throw new TRPCError({
+        code: "NOT_FOUND",
+        message: "User not found",
+      });
+    }
+    return {
+      success: true,
+      data: followers.followers,
+    };
+  }),
 });

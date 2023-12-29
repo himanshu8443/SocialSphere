@@ -42,7 +42,7 @@ const Login = () => {
 
   return (
     <div className=" dark:bg-gray-700 text-white h-full flex justify-center items-center min-h-screen p-6 ">
-      <div className=" flex justify-between gap-20 items-center w-[70%] ">
+      <div className=" flex justify-between gap-20 items-center md:w-[70%] ">
         <div className="flex flex-col gap-10  space-y-2 mb-44">
           <h1 className="text-primary-600 text-7xl font-bold">Login</h1>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -50,6 +50,7 @@ const Login = () => {
               <div className="w-80">
                 <div className="relative h-10 w-full min-w-[200px]">
                   <input
+                    data-testid="email"
                     className="peer h-full w-full rounded-[7px] border border-gray-500 dark:border-gray-100 dark:border-t-transparent border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-gray-700 dark:text-gray-100 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-gray-500 dark:placeholder-shown:border-gray-100 placeholder-shown:border-t-gray-600 dark:placeholder-shown:border-t-gray-100 focus:border-2 focus:border-primary-600 dark:focus:border-primary-600 focus:border-t-transparent dark:focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-gray-500"
                     placeholder=" "
                     type="email"
@@ -63,6 +64,7 @@ const Login = () => {
               <div className="w-80">
                 <div className="relative h-10 w-full min-w-[200px]">
                   <input
+                    data-testid="password"
                     className="peer h-full w-full rounded-[7px] border border-gray-500 dark:border-gray-100 border-t-transparent dark:border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-gray-700 dark:text-gray-100 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-gray-500 dark:placeholder-shown:border-gray-100 placeholder-shown:border-t-gray-600 dark:placeholder-shown:border-t-gray-100 focus:border-2 focus:border-primary-600 dark:focus:border-primary-600 focus:border-t-transparent dark:focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-gray-500"
                     placeholder=" "
                     autoComplete="off"
@@ -85,7 +87,7 @@ const Login = () => {
             </div>
           </form>
         </div>
-        <Image src={LoginImg} alt="Login" />
+        <Image src={LoginImg} alt="Login" className="max-sm:hidden" />
       </div>
     </div>
   );

@@ -3,8 +3,12 @@ import { useState } from "react";
 import Foryou from "./Foryou";
 import ActivePost from "../ActivePost";
 import Following from "./Folllowing";
+import { useAppSelector } from "@/lib/hook";
+import { useRouter } from "next/navigation";
 
 const Feed = () => {
+  const router = useRouter();
+  const user = useAppSelector((state) => state.user.auth);
   const [activeTab, setActiveTab] = useState<0 | 1>(0);
   return (
     <>
@@ -26,7 +30,13 @@ const Feed = () => {
               ? "dark:bg-primary-800 text-gray-600 bg-gray-200 dark:text-gray-200"
               : "text-gray-500 dark:text-gray-400"
           }`}
-          onClick={() => setActiveTab(1)}
+          onClick={() => {
+            if (!user) {
+              router.push("/login");
+              return;
+            }
+            setActiveTab(1);
+          }}
         >
           Following
         </button>

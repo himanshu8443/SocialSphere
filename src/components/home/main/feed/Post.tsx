@@ -6,7 +6,7 @@ import ShareIcon from "@mui/icons-material/Share";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import VideoPlayer from "./VideoPlayer";
-import { useAppDispatch } from "@/lib/hook";
+import { useAppDispatch, useAppSelector } from "@/lib/hook";
 import { setActivePost } from "@/redux/slices/ActivePost";
 import Link from "next/link";
 import * as datetime from "date-fns";
@@ -15,6 +15,7 @@ import { likeUnlikePost } from "@/app/api/posts";
 import { useState } from "react";
 import { followUser } from "@/app/api/friends";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 const Post = ({
   post,
@@ -27,9 +28,15 @@ const Post = ({
   setPosts: Dispatch<any>;
 }) => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const [likedLoading, setLikedLoading] = useState(false);
+  const user = useAppSelector((state) => state.user);
 
   const likeUnlike = async (postId: string) => {
+    if (!user?.auth) {
+      router.push("/login");
+      return;
+    }
     if (!posts) return;
     const updatedPosts = JSON.parse(JSON.stringify(posts)) as any[];
     const isLiked = updatedPosts.find((post) => post.id === postId)?.likedBy
@@ -54,6 +61,10 @@ const Post = ({
   };
 
   const handleFollow = async (userId: string) => {
+    if (!user?.auth) {
+      router.push("/login");
+      return;
+    }
     const res = await followUser({ userId });
     if (!res?.success) {
     }

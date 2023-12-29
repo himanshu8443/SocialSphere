@@ -40,6 +40,7 @@ export default function Signup() {
               <div className="w-72">
                 <div className="relative h-10 w-full min-w-[200px]">
                   <input
+                    data-testid="name"
                     className="peer h-full w-full rounded-[7px] border border-gray-500 dark:border-gray-100 dark:border-t-transparent border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-gray-700 dark:text-gray-100 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-gray-500 dark:placeholder-shown:border-gray-100 placeholder-shown:border-t-gray-600 dark:placeholder-shown:border-t-gray-100 focus:border-2 focus:border-primary-600 dark:focus:border-primary-600 focus:border-t-transparent dark:focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-gray-500"
                     placeholder=" "
                     type="text"
@@ -53,6 +54,7 @@ export default function Signup() {
               <div className="w-72">
                 <div className="relative h-10 w-full min-w-[200px]">
                   <input
+                    data-testid="email"
                     className="peer h-full w-full rounded-[7px] border border-gray-500 dark:border-gray-100 dark:border-t-transparent border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-gray-700 dark:text-gray-100 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-gray-500 dark:placeholder-shown:border-gray-100 placeholder-shown:border-t-gray-600 dark:placeholder-shown:border-t-gray-100 focus:border-2 focus:border-primary-600 dark:focus:border-primary-600 focus:border-t-transparent dark:focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-gray-500"
                     placeholder=" "
                     type="email"
@@ -66,6 +68,7 @@ export default function Signup() {
               <div className="w-72">
                 <div className="relative h-10 w-full min-w-[200px]">
                   <input
+                    data-testid="password"
                     className="peer h-full w-full rounded-[7px] border border-gray-500 dark:border-gray-100 border-t-transparent dark:border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-gray-700 dark:text-gray-100 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-gray-500 dark:placeholder-shown:border-gray-100 placeholder-shown:border-t-gray-600 dark:placeholder-shown:border-t-gray-100 focus:border-2 focus:border-primary-600 dark:focus:border-primary-600 focus:border-t-transparent dark:focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-gray-500"
                     placeholder=" "
                     autoComplete="off"
@@ -80,6 +83,7 @@ export default function Signup() {
               <div className="w-72">
                 <div className="relative h-10 w-full min-w-[200px]">
                   <input
+                    data-testid="confirmPassword"
                     className="peer h-full w-full rounded-[7px] border border-gray-500 dark:border-gray-100 dark:border-t-transparent border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-gray-700 dark:text-gray-100 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-gray-500 dark:placeholder-shown:border-gray-100 placeholder-shown:border-t-gray-600 dark:placeholder-shown:border-t-gray-100 focus:border-2 focus:border-primary-600 dark:focus:border-primary-600 focus:border-t-transparent dark:focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-gray-500"
                     placeholder=" "
                     type="password"
@@ -106,7 +110,7 @@ export default function Signup() {
           loading="lazy"
           src={SignUpImg}
           alt="Sign Up"
-          className=" w-[600px] h-[600px] object-cover"
+          className=" w-[600px] h-[600px] object-cover max-sm:hidden"
         />
       </div>
     </div>

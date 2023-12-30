@@ -10,7 +10,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/hook";
 import { setActivePost } from "@/redux/slices/ActivePost";
 import Link from "next/link";
 import * as datetime from "date-fns";
-import { Dispatch } from "react";
+import { Dispatch, use } from "react";
 import { likeUnlikePost } from "@/app/api/posts";
 import { useState } from "react";
 import { followUser } from "@/app/api/friends";
@@ -93,22 +93,24 @@ const Post = ({
             • {timeAgo(post?.createdAt)}
           </p>
         </div>
-        <div className="text-gray-500 dark:text-gray-400">
-          {post?.User.followers?.length > 0 ? (
-            <PeopleAltIcon className=" scale-125" />
-          ) : (
-            <button
-              className="p-2 pr-3 active:bg-transparent dark:active:bg-transparent hover:bg-gray-200 dark:hover:bg-slate-700 rounded-full justify-center items-center flex"
-              title="Add Friend"
-              onClick={() => handleFollow(post?.User?.id)}
-            >
-              <PersonAddIcon
-                className="text-primary-600 scale-[1.4]
+        {user?.id !== post?.User?.id && (
+          <div className="text-gray-500 dark:text-gray-400">
+            {post?.User.followers?.length > 0 ? (
+              <PeopleAltIcon className=" scale-125" />
+            ) : (
+              <button
+                className="p-2 pr-3 active:bg-transparent dark:active:bg-transparent hover:bg-gray-200 dark:hover:bg-slate-700 rounded-full justify-center items-center flex"
+                title="Add Friend"
+                onClick={() => handleFollow(post?.User?.id)}
+              >
+                <PersonAddIcon
+                  className="text-primary-600 scale-[1.4]
                 duration-1000 ease-linear transition-all"
-              />
-            </button>
-          )}
-        </div>
+                />
+              </button>
+            )}
+          </div>
+        )}
       </div>
       <div className="flex flex-col gap-3 mt-3">
         <p

@@ -1,8 +1,6 @@
 import Main from "@/components/home/main/Main";
 import SideProfile from "@/components/home/SideProfile";
 import Sponsor from "@/components/home/Sponsor";
-import FollowingModal from "@/components/home/FollowingModal";
-import FollowersModal from "@/components/home/FollowersModal";
 
 export default function Home() {
   return (
@@ -10,8 +8,6 @@ export default function Home() {
       <SideProfile />
       <Main />
       <Sponsor />
-      <FollowingModal />
-      <FollowersModal />
     </div>
   );
 }

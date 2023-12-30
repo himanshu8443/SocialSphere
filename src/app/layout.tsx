@@ -8,6 +8,8 @@ import "./globals.css";
 import Nav from "../components/Navbar/Nav";
 import AutoLogout from "@/components/AutoLogout";
 import TopLoadingBar from "../components/TopLoadingBar";
+import FollowingModal from "@/components/home/FollowingModal";
+import FollowersModal from "@/components/home/FollowersModal";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -37,6 +39,8 @@ export default function RootLayout({
             <TopLoadingBar />
             <Nav />
             {children}
+            <FollowingModal />
+            <FollowersModal />
           </ThemeProvider>
         </ReduxProvider>
       </body>

@@ -13,6 +13,7 @@ import EditProfile from "./EditProfile";
 import { useAppDispatch } from "@/lib/hook";
 import { setProgress } from "@/redux/slices/TopLoadingBar";
 import ProfileSkeleton from "./ProfileSkeleton";
+import { setFollowersModal, setFollowingModal } from "@/redux/slices/modals";
 
 export default function Profile({ params }: { params: { profileId: string } }) {
   const dispatch = useAppDispatch();
@@ -140,12 +141,18 @@ export default function Profile({ params }: { params: { profileId: string } }) {
             <p className="text-gray-500 dark:text-gray-400 hidden md:block">
               {user?.posts?.length} posts
             </p>
-            <p className="text-gray-500 dark:text-gray-400">
+            <button
+              className="text-gray-500 dark:text-gray-400"
+              onClick={() => dispatch(setFollowersModal(true))}
+            >
               {user?.followers?.length} followers
-            </p>
-            <p className="text-gray-500 dark:text-gray-400">
+            </button>
+            <button
+              className="text-gray-500 dark:text-gray-400"
+              onClick={() => dispatch(setFollowingModal(true))}
+            >
               {user?.following?.length} following
-            </p>
+            </button>
           </div>
           <p className="text-gray-600 dark:text-gray-300">
             {user?.about || "No bio"}

@@ -139,4 +139,45 @@ export const followRouter = router({
       data: followers.followers,
     };
   }),
+
+  // remove follower by id
+  removeFollower: protectedProcedure
+    .input(z.object({ userId: z.string() }))
+    .mutation(async ({ input, ctx }) => {
+      const { db } = ctx;
+      const { userId } = input;
+      const follower = await db.user.findUnique({
+        where: { id: userId },
+      });
+      if (!follower) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "User not found",
+        });
+      }
+      await db.user.update({
+        where: { id: userId },
+        data: {
+          following: {
+            disconnect: { id: ctx.user.userId },
+          },
+        },
+      });
+      const followingUser = await db.user.findUnique({
+        where: { id: ctx.user.userId },
+        include: { following: true },
+      });
+      if (!followingUser) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "User not found",
+        });
+      }
+      await db.user.update({
+        where: { id: ctx.user.userId },
+        data: { followers: { disconnect: { id: userId } } },
+      });
+
+      return { success: true };
+    }),
 });

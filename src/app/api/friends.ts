@@ -58,3 +58,16 @@ export async function getFollowers() {
     return error;
   }
 }
+
+// remove follower by id
+export async function removeFollowerById(userId: string) {
+  try {
+    const result = await trpc.follow.removeFollower.mutate({
+      userId,
+    });
+    toast.success("Follower removed");
+    return result;
+  } catch (error: any) {
+    return error;
+  }
+}

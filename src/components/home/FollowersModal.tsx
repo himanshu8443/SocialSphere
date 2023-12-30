@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { getFollowers } from "@/app/api/friends";
 import { useAppDispatch, useAppSelector } from "@/lib/hook";
 import { setFollowersModal } from "@/redux/slices/modals";
+import { removeFollowerById } from "@/app/api/friends";
 
 const UnfollowModal = () => {
   const dispatch = useAppDispatch();
@@ -23,7 +24,12 @@ const UnfollowModal = () => {
     getFollowingList();
   }, []);
 
-  const remove = async (id: string) => {};
+  const remove = async (id: string) => {
+    const res = await removeFollowerById(id);
+    if (res?.success) {
+      setFollowers(followers.filter((user) => user?.id !== id));
+    }
+  };
 
   return (
     modal && (

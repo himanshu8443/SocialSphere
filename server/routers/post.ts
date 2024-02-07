@@ -104,6 +104,8 @@ export const postRouter = router({
     .input(z.string())
     .mutation(async ({ input, ctx }) => {
       const id = input;
+      console.log("id", id);
+      console.log("ctx.user.userId", ctx.user.userId);
       const ifUserOwnsPost = await ctx.db.post.findFirst({
         where: {
           id,
@@ -111,26 +113,21 @@ export const postRouter = router({
         },
       });
       if (!ifUserOwnsPost) {
+        console.log("ifUserOwnsPost", !ifUserOwnsPost?.id);
         throw new TRPCError({
           code: "UNAUTHORIZED",
           message: "User does not own post",
         });
       }
+      // delete comment
+      await ctx.db.comment.deleteMany({
+        where: {
+          postId: id,
+        },
+      });
       const post = await ctx.db.post.delete({
         where: {
           id,
-        },
-      });
-      const user = await ctx.db.user.update({
-        where: {
-          id: ctx.user.userId,
-        },
-        data: {
-          posts: {
-            disconnect: {
-              id: post.id,
-            },
-          },
         },
       });
       return post;

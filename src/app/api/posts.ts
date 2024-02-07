@@ -94,3 +94,23 @@ export async function getPostsOfUserFollowing({
     return error?.data?.message;
   }
 }
+
+// delete post
+export async function deletePost(postId: string) {
+  try {
+    const result = await trpc.posts.deletePost.mutate(postId);
+    toast.success("Post deleted successfully");
+    return {
+      success: true,
+      result,
+    };
+  } catch (error: any) {
+    console.log("error message", error?.data?.message);
+    console.log("error", error);
+    toast.error(error?.data?.message);
+    return {
+      success: false,
+      message: error?.data?.message,
+    };
+  }
+}

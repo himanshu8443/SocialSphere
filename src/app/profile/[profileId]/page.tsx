@@ -14,6 +14,8 @@ import { useAppDispatch } from "@/lib/hook";
 import { setProgress } from "@/redux/slices/TopLoadingBar";
 import ProfileSkeleton from "./ProfileSkeleton";
 import { setFollowersModal, setFollowingModal } from "@/redux/slices/modals";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import { deletePost } from "@/app/api/posts";
 
 export default function Profile({ params }: { params: { profileId: string } }) {
   const dispatch = useAppDispatch();
@@ -21,6 +23,7 @@ export default function Profile({ params }: { params: { profileId: string } }) {
   const [user, setUser] = useState<any>();
   const [editProfileModal, setEditProfileModal] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
+  const [deteteModal, setDeleteModal] = useState<any>(false);
   useEffect(() => {
     let isMounted = true;
     const getUser = async () => {
@@ -90,6 +93,21 @@ export default function Profile({ params }: { params: { profileId: string } }) {
         return {
           ...prev,
           followers: [...prev?.followers, loggedInUser],
+        };
+      });
+    }
+  };
+
+  // delete post
+  const delPost = async (postId: string) => {
+    if (!postId) return;
+    console.log("postid", postId);
+    const res = await deletePost(postId);
+    if (res?.success) {
+      setUser((prev: any) => {
+        return {
+          ...prev,
+          posts: prev?.posts?.filter((post: any) => post?.id !== postId),
         };
       });
     }
@@ -166,7 +184,7 @@ export default function Profile({ params }: { params: { profileId: string } }) {
             {user?.posts?.map((post: any) => (
               <div
                 key={post?.id}
-                className="relative md:w-[300px] md:h-[300px] h-[120px] w-[120px] rounded-md overflow-hidden cursor-pointer"
+                className="relative md:w-[300px] md:h-[300px] h-[120px] w-[120px] rounded-md overflow-hidden cursor-pointer group"
               >
                 {post?.type === "image" ? (
                   <Image
@@ -204,6 +222,13 @@ export default function Profile({ params }: { params: { profileId: string } }) {
                     </div>
                   </motion.div>
                 </Link>
+                <button
+                  title="Delete Post"
+                  className="absolute top-2 right-2 group-hover:flex hidden items-center justify-center bg-black bg-opacity-50 rounded-md p-1"
+                  onClick={() => setDeleteModal(post?.id)}
+                >
+                  <DeleteOutlineIcon className="text-white scale-110 hover:text-primary-600" />
+                </button>
               </div>
             ))}
           </div>
@@ -216,6 +241,33 @@ export default function Profile({ params }: { params: { profileId: string } }) {
         editProfileModal={editProfileModal}
         setEditProfileModal={setEditProfileModal}
       />
+      {/* confirm modal */}
+      {deteteModal && (
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 z-50 flex justify-center items-center">
+          <div className="bg-gray-700 rounded-md p-3">
+            <p className="text-gray-600 dark:text-gray-300 text-lg font-semibold">
+              Are you sure you want to delete this post?
+            </p>
+            <div className="flex justify-end gap-3 mt-5">
+              <button
+                className="px-3 py-1 bg-primary-700 text-white rounded-md"
+                onClick={() => {
+                  delPost(deteteModal);
+                  setDeleteModal(false);
+                }}
+              >
+                Yes
+              </button>
+              <button
+                className="px-3 py-1 bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-md"
+                onClick={() => setDeleteModal(false)}
+              >
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

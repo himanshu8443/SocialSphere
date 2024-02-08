@@ -27,7 +27,7 @@ const Following = () => {
 
   const handleScroll = () => {
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
-    if (scrollTop + clientHeight >= scrollHeight - 3) {
+    if (scrollTop + clientHeight >= scrollHeight - 300) {
       setPage((prev) => prev + 1);
     }
   };

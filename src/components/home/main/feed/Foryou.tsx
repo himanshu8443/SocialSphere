@@ -22,6 +22,8 @@ const Foryou = () => {
         // console.log("posts", res.data);
       } else {
         setLastPage(true);
+        console.log("last page");
+        console.log("res", res);
       }
     };
     getPosts();
@@ -29,7 +31,7 @@ const Foryou = () => {
 
   const handleScroll = () => {
     const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
-    if (scrollTop + clientHeight >= scrollHeight - 3) {
+    if (scrollTop + clientHeight >= scrollHeight - 10) {
       setPage((prev) => prev + 1);
     }
   };

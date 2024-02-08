@@ -113,7 +113,6 @@ export const postRouter = router({
         },
       });
       if (!ifUserOwnsPost) {
-        console.log("ifUserOwnsPost", !ifUserOwnsPost?.id);
         throw new TRPCError({
           code: "UNAUTHORIZED",
           message: "User does not own post",

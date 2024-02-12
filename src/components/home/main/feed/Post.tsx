@@ -16,6 +16,7 @@ import { useState } from "react";
 import { followUser } from "@/app/api/friends";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 const Post = ({
   post,
@@ -184,6 +185,20 @@ const Post = ({
         <button
           className="flex justify-center items-center hover:bg-gray-200 dark:hover:bg-slate-700 rounded-full p-2 pr-3 py-3  active:bg-transparent dark:active:bg-transparent"
           title="Share"
+          onClick={() => {
+            navigator.clipboard.writeText(
+              `${window.location.origin}/?p=${post?.id}`
+            );
+            toast.success("Link copied to clipboard", {
+              position: "top-right",
+              autoClose: 100,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+            });
+          }}
         >
           <ShareIcon className="dark:text-gray-400 text-gray-500 scale-125" />
         </button>

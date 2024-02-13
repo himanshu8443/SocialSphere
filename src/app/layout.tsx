@@ -19,6 +19,7 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: "SocialSphere",
   description: "A social media platform for everyone",
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({

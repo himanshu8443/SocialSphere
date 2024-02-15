@@ -2,9 +2,9 @@
 
 import { useAppSelector } from "@/lib/hook";
 import Link from "next/link";
-import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import ThemeSwitcher from "./ThemeSwither";
 import Account from "./Account";
+import Notification from "./Notification";
 
 const Actions = () => {
   const user = useAppSelector((state) => state.user);
@@ -26,9 +26,7 @@ const Actions = () => {
           </Link>
         </div>
       ) : (
-        <button className="flex items-center gap-5 shadow-sm shadow-gray-300 dark:shadow-gray-700 dark:border-gray-700 border-gray-200  p-2 rounded-lg border bg-gray-100 hover:dark:bg-gray-700 dark:bg-gray-800 hover:bg-slate-200 active:bg-gray-100 dark:active:bg-gray-800">
-          <NotificationsNoneOutlinedIcon className=" text-primary-600  text-4xl" />
-        </button>
+        <Notification />
       )}
       <ThemeSwitcher />
       <Account user={user} />

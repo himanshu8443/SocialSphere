@@ -1,5 +1,5 @@
 # SocialSphere
-## Social Media application built using T3 stack ( TRPC, NextJs, TypeScript Tailwind, Tailwind, Prisma).
+## Social Media application built using T3 stack ( TRPC, NextJs, TypeScript Tailwind, Prisma).
 ---
 ## Features 
 - user authentication.
@@ -26,6 +26,9 @@ npm install
 ```
 4. Start server
 ```bash
+cd server
+npx prisma generate
+cd ..
 npm run dev:server
 ```
 5. Start client

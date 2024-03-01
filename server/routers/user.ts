@@ -106,4 +106,30 @@ export const userRouter = router({
         data: user,
       };
     }),
+
+  // find user by query
+  searchUser: publicProcedure
+    .input(z.string())
+    .query(async ({ ctx, input }) => {
+      const user = await ctx.db.user.findMany({
+        where: {
+          name: {
+            contains: input,
+            mode: "insensitive",
+          },
+        },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          profileImage: true,
+        },
+      });
+
+      return {
+        success: true,
+        message: "Successfully found user",
+        data: user || [],
+      };
+    }),
 });

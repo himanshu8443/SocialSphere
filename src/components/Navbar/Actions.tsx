@@ -5,6 +5,7 @@ import Link from "next/link";
 import ThemeSwitcher from "./ThemeSwither";
 import Account from "./Account";
 import Notification from "./Notification";
+import SearchUser from "./SearchUser";
 
 const Actions = () => {
   const user = useAppSelector((state) => state.user);
@@ -12,6 +13,7 @@ const Actions = () => {
   const isLogged = user.auth;
   return (
     <div className="flex items-center md:gap-7 gap-2 flex-row">
+      {isLogged && <SearchUser />}
       {!isLogged ? (
         <div className="flex items-center gap-5">
           <Link href="/signup">

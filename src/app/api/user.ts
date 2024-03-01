@@ -54,3 +54,14 @@ export async function updateUserDetails({
     return error;
   }
 }
+
+export async function searchUser(query: string) {
+  try {
+    const result = await trpc.user.searchUser.query(query);
+    return result;
+  } catch (error: any) {
+    console.log("error message", error?.data?.message);
+    console.log("error", error);
+    return error;
+  }
+}

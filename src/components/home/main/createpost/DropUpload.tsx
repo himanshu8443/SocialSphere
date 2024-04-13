@@ -36,6 +36,7 @@ export default function Upload({
       ) : Type === "Image" ? (
         <div className="flex justify-center items-center mt-2 min-h-[200px]">
           <Image
+            unoptimized={true}
             placeholder={`data:image/svg+xml;base64,${toBase64(
               shimmer(700, 475)
             )}`}

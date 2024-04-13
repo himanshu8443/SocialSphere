@@ -124,7 +124,12 @@ const SideProfile = () => {
     </div>
   ) : (
     <div className="md:flex flex-col justify-center items-center dark:bg-gray-800 bg-gray-100 rounded-md shadow-md p-2 hidden md:w-[330px] h-fit">
-      <Image src={journey} alt="journey" className="w-[300px] h-[300px]" />
+      <Image
+        unoptimized={true}
+        src={journey}
+        alt="journey"
+        className="w-[300px] h-[300px]"
+      />
       <Link href="/signup">
         <button className="rounded-full outline outline-primary-500 focus:outline-none focus:ring-4 focus:ring-primary-500 dark:focus:ring-primary-600 shadow-md shadow-primary-500/50 dark:shadow-primary-600/50 bg-gradient-to-br from-cyan-400 to-cyan-600 hover:from-cyan-500 hover:to-cyan-700 dark:hover:from-cyan-600 dark:hover:to-cyan-800 active:from-cyan-600 active:to-cyan-700 dark:active:from-cyan-700 dark:active:to-cyan-800 text-white font-semibold text-sm px-4 py-2">
           Start your Journey

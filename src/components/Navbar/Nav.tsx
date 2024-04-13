@@ -16,7 +16,12 @@ const Nav = () => {
             className="flex items-center gap-5 cursor-pointer h-28 w-44 md:h-28 md:w-64 max-sm:ml-2"
             onClick={() => dispatch(setProgress(100))}
           >
-            <Image src={logo} alt="logo" className=" object-cover" />
+            <Image
+              unoptimized={true}
+              src={logo}
+              alt="logo"
+              className=" object-cover"
+            />
           </div>
         </Link>
         <Actions />

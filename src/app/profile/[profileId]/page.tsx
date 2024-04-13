@@ -119,6 +119,7 @@ export default function Profile({ params }: { params: { profileId: string } }) {
     <div className="mx-auto max-w-[1200px] min-h-screen mt-10 px-5">
       <div className="flex justify-between items-center md:gap-16 max-w-[600px] mx-auto">
         <Image
+          unoptimized={true}
           src={user?.profileImage}
           width={150}
           height={150}
@@ -188,6 +189,7 @@ export default function Profile({ params }: { params: { profileId: string } }) {
               >
                 {post?.type === "image" ? (
                   <Image
+                    unoptimized={true}
                     src={post?.src}
                     alt="Post"
                     layout="fill"

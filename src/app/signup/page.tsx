@@ -107,6 +107,7 @@ export default function Signup() {
           </form>
         </div>
         <Image
+          unoptimized={true}
           loading="lazy"
           src={SignUpImg}
           alt="Sign Up"

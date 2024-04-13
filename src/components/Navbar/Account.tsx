@@ -23,6 +23,7 @@ const Account = ({ user }: { user: UserState & PersistPartial }) => {
           onClick={() => setShowMenu(!showMenu)}
         >
           <Image
+            unoptimized={true}
             src={user.profileImage}
             width={35}
             height={35}

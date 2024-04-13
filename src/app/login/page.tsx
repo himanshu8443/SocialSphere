@@ -87,7 +87,12 @@ const Login = () => {
             </div>
           </form>
         </div>
-        <Image src={LoginImg} alt="Login" className="max-sm:hidden" />
+        <Image
+          unoptimized={true}
+          src={LoginImg}
+          alt="Login"
+          className="max-sm:hidden"
+        />
       </div>
     </div>
   );

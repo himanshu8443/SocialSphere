@@ -79,6 +79,7 @@ const Post = ({
       <div className="flex justify-between items-center">
         <div className="flex space-x-2 justify-center items-center gap-2 ">
           <Image
+            unoptimized={true}
             alt="Profile"
             src={post?.User?.profileImage}
             width={40}

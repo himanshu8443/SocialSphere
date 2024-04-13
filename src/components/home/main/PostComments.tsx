@@ -22,6 +22,7 @@ const Comments = ({
 
       <div className="flex space-x-2 justify-start items-center gap-2 ">
         <Image
+          unoptimized={true}
           alt="Profile"
           src={comment?.User?.profileImage}
           width={30}

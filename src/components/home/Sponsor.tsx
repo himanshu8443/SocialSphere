@@ -15,6 +15,7 @@ const Sponsor = () => {
           </div>
         </div>
         <Image
+          unoptimized={true}
           src={add}
           width={300}
           height={300}

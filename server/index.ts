@@ -27,8 +27,8 @@ app.use(
   })
 );
 
-app.listen(4000, () => {
-  console.log("Server listening on port 4000");
+app.listen(process.env.PORT, () => {
+  console.log(`Server running on port ${process.env.PORT}`);
 });
 
 export type AppRouter = typeof appRouter;

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build:server": "cd server && rimraf dist && npx tsc",
+    "build:server": "cd server && rimraf dist && npx tsc && prisma generate",
     "start:server": "node server/dist/index.js",
     "predev:server": "cd server && rimraf dist && tsc",
     "dev:server": "cd server && concurrently \"npx tsc -w\" \"nodemon dist/index.js\"",

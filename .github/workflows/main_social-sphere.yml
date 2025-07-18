@@ -39,8 +39,9 @@ jobs:
           cp package.json deployment/
           cp -r node_modules deployment/
           # Update package.json start script for server-only deployment
-          cd deployment && jq '.scripts.start = "node server/dist/index.js"' package.json > temp.json && mv temp.json package.json
-          cd deployment && zip -r ../release.zip .
+          cd deployment
+          jq '.scripts.start = "node server/dist/index.js"' package.json > temp.json && mv temp.json package.json
+          zip -r ../release.zip .
 
       - name: Create web.config for Azure
         run: |

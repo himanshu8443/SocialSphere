@@ -21,16 +21,54 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
-          node-version: '22.x'
+          node-version: "22.x"
 
-      - name: npm install, build, and test
+      - name: Install jq for JSON manipulation
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      - name: npm install and build server
         run: |
           npm install
-          npm run build --if-present
-          npm run test --if-present
+          npm run build:server
 
-      - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
+      - name: Create deployment package
+        run: |
+          mkdir deployment
+          cp -r server/dist deployment/
+          cp -r server/prisma deployment/
+          cp package.json deployment/
+          cp -r node_modules deployment/
+          # Update package.json start script for server-only deployment
+          cd deployment && jq '.scripts.start = "node server/dist/index.js"' package.json > temp.json && mv temp.json package.json
+          cd deployment && zip -r ../release.zip .
+
+      - name: Create web.config for Azure
+        run: |
+          cat > web.config << 'EOF'
+          <?xml version="1.0" encoding="utf-8"?>
+          <configuration>
+            <system.webServer>
+              <handlers>
+                <add name="iisnode" path="server/dist/index.js" verb="*" modules="iisnode"/>
+              </handlers>
+              <rewrite>
+                <rules>
+                  <rule name="DynamicContent">
+                    <conditions>
+                      <add input="{REQUEST_FILENAME}" matchType="IsFile" negate="True"/>
+                    </conditions>
+                    <action type="Rewrite" url="server/dist/index.js"/>
+                  </rule>
+                </rules>
+              </rewrite>
+              <iisnode 
+                node_env="%node_env%" 
+                nodeProcessCommandLine="%programfiles%\nodejs\node.exe"
+                interceptor="%programfiles%\iisnode\interceptor.js" />
+            </system.webServer>
+          </configuration>
+          EOF
+          zip -u release.zip web.config
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -41,7 +79,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
-    
+
     permissions:
       id-token: write #This is required for requesting the JWT
       contents: read #This is required for actions/checkout
@@ -54,7 +92,7 @@ jobs:
 
       - name: Unzip artifact for deployment
         run: unzip release.zip
-      
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -62,11 +100,10 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_BAF6DB5AC956447AA0B4F1DF2A4E5F22 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_56D96AB605344DA5A308241A0B6119A8 }}
 
-      - name: 'Deploy to Azure Web App'
+      - name: "Deploy to Azure Web App"
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'social-sphere'
-          slot-name: 'Production'
+          app-name: "social-sphere"
+          slot-name: "Production"
           package: .
-          

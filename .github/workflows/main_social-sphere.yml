@@ -34,8 +34,9 @@ jobs:
       - name: Create deployment package
         run: |
           mkdir deployment
-          cp -r server/dist deployment/
-          cp -r server/prisma deployment/
+          mkdir deployment/server
+          cp -r server/dist deployment/server/
+          cp -r server/prisma deployment/server/
           cp package.json deployment/
           cp -r node_modules deployment/
           # Update package.json start script for server-only deployment
